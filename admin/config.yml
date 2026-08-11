@@ -1,0 +1,36 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Where uploaded photos get stored in the repo, and the public path used to reference them
+media_folder: "images/photography/uploads"
+public_folder: "/images/photography/uploads"
+
+collections:
+  - name: "photos"
+    label: "Photography"
+    files:
+      - name: "gallery"
+        label: "Gallery"
+        file: "content/photos.json"
+        fields:
+          - label: "Photos"
+            name: "photos"
+            widget: "list"
+            summary: "{{fields.category}} — {{fields.alt}}"
+            fields:
+              - label: "Category"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "Portraits", value: "portraits" }
+                  - { label: "Landscapes", value: "landscapes" }
+                  - { label: "Street", value: "street" }
+              - label: "Photo"
+                name: "image"
+                widget: "image"
+              - label: "Description (for accessibility, not shown on page)"
+                name: "alt"
+                widget: "string"
+                required: false
+                default: "Photo"

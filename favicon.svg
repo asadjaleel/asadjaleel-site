@@ -1,0 +1,20 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b1f26"/>
+      <stop offset="100%" stop-color="#14171c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square badge -->
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#bg)"/>
+
+  <!-- AJ monogram -->
+  <text x="32" y="41" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700"
+        font-size="28" fill="#ede9e1" text-anchor="middle" letter-spacing="-1">AJ</text>
+
+  <!-- Tri-color accent bar: professional / photography / personal -->
+  <rect x="13" y="49" width="12" height="4" rx="2" fill="#7a8b9c"/>
+  <rect x="26" y="49" width="12" height="4" rx="2" fill="#c1652e"/>
+  <rect x="39" y="49" width="12" height="4" rx="2" fill="#8a9a7e"/>
+</svg>
