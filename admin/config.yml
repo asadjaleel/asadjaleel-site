@@ -7,6 +7,46 @@ media_folder: "images/photography/uploads"
 public_folder: "/images/photography/uploads"
 
 collections:
+  - name: "music"
+    label: "Music"
+    files:
+      - name: "playlist"
+        label: "Playlist"
+        file: "content/playlist.json"
+        fields:
+          - label: "Tracks"
+            name: "tracks"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - label: "Title"
+                name: "title"
+                widget: "string"
+              - label: "Audio file"
+                name: "file"
+                widget: "file"
+                media_folder: "/audio/uploads"
+                public_folder: "/audio/uploads"
+
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - name: "hero-images"
+        label: "Hero Images"
+        file: "content/homepage.json"
+        media_folder: "/images/uploads"
+        public_folder: "/images/uploads"
+        fields:
+          - label: "Professional section photo"
+            name: "professional"
+            widget: "image"
+          - label: "Photography section photo"
+            name: "photography"
+            widget: "image"
+          - label: "Personal section photo"
+            name: "personal"
+            widget: "image"
+
   - name: "photos"
     label: "Photography"
     files:
