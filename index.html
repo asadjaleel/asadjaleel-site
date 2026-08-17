@@ -184,22 +184,26 @@
     :root{ --item:74vw; --speed:26s; }
     footer{ padding:18px 20px 22px; }
 
-    /* No hover on touch. Every card keeps a quiet label so you always
-       know what you're looking at; the card under your finger gets the
-       full reveal — colour, veil, and the scramble animation. */
+    /* No hover on touch. Photos stay in colour and hold still — touching
+       a card only brings its name forward and replays the scramble. */
+    .card img{
+      filter:none;
+      transform:scale(1);
+      transition:none;
+    }
+    .card:hover img{        /* iOS fakes :hover on tap — neutralise it */
+      filter:none;
+      transform:scale(1);
+    }
     .label{
-      opacity:.55;
+      opacity:.5;
       background:transparent;
       backdrop-filter:none;
     }
     .card.is-active .label{
       opacity:1;
-      background:rgba(250,247,242,.34);
-      backdrop-filter:blur(1.5px);
-    }
-    .card.is-active img{
-      filter:grayscale(0%) brightness(1) contrast(1.02);
-      transform:scale(1.06);
+      background:rgba(250,247,242,.26);
+      backdrop-filter:none;
     }
     .viewport:hover .item{ opacity:1; }
   }
