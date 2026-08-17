@@ -183,13 +183,24 @@
   @media (max-width:640px){
     :root{ --item:74vw; --speed:26s; }
     footer{ padding:18px 20px 22px; }
-    /* No hover on touch: show the name without veiling the photo */
+
+    /* No hover on touch. Every card keeps a quiet label so you always
+       know what you're looking at; the card under your finger gets the
+       full reveal — colour, veil, and the scramble animation. */
     .label{
-      opacity:1;
-      background:rgba(250,247,242,.22);
+      opacity:.55;
+      background:transparent;
       backdrop-filter:none;
     }
-    .card img{ filter:grayscale(0%); }
+    .card.is-active .label{
+      opacity:1;
+      background:rgba(250,247,242,.34);
+      backdrop-filter:blur(1.5px);
+    }
+    .card.is-active img{
+      filter:grayscale(0%) brightness(1) contrast(1.02);
+      transform:scale(1.06);
+    }
     .viewport:hover .item{ opacity:1; }
   }
 
@@ -323,6 +334,22 @@
      that decays back into the normal drift. */
   let startX = 0, startOffset = 0, moved = 0;
   let samples = [];
+  let activeCard = null;
+
+  /* Whichever card sits under the finger becomes the active one and
+     plays its scramble reveal — the touch equivalent of hovering. */
+  function activateAt(x, y){
+    const el = document.elementFromPoint(x, y);
+    const card = el && el.closest ? el.closest('.card') : null;
+    if (!card || card === activeCard) return;
+
+    if (activeCard) activeCard.classList.remove('is-active');
+    activeCard = card;
+    card.classList.add('is-active');
+
+    const txt = card.querySelector('.txt');
+    if (txt) scramble(txt, card.dataset.name);
+  }
 
   viewport.addEventListener('touchstart', (e) => {
     if (e.touches.length !== 1) return;
@@ -332,11 +359,13 @@
     startX = e.touches[0].clientX;
     startOffset = offset;
     samples = [{ x: startX, t: performance.now() }];
+    activateAt(startX, e.touches[0].clientY);
   }, { passive: true });
 
   viewport.addEventListener('touchmove', (e) => {
     if (!dragging || e.touches.length !== 1) return;
     const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
     const dx = x - startX;
     moved = Math.abs(dx);
 
@@ -345,6 +374,9 @@
     offset = startOffset + dx;
     wrap();
     track.style.transform = 'translate3d(' + offset + 'px,0,0)';
+
+    // Follow the finger across cards as the strip slides under it.
+    activateAt(x, y);
 
     const now = performance.now();
     samples.push({ x, t: now });
