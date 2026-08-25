@@ -66,7 +66,7 @@
   .name{
     font-family:var(--mono);
     font-weight:500;
-    font-size:14px;
+    font-size:clamp(20px,1.9vw,30px);
     letter-spacing:.16em;
     text-transform:uppercase;
   }
@@ -113,35 +113,33 @@
     position:absolute;
     inset:0;
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
     align-items:center;
-    justify-content:center;
-    gap:16px;
-    padding:20px;
-    background:rgba(250,247,242,.26);
+    justify-content:flex-start;
+    padding:66vh 20px 20px;
+    gap:10px;
+    background:rgba(20,18,15,.26);
     opacity:0;
     transition:opacity .45s var(--ease);
   }
   .card:hover .label{ opacity:1; }
 
   .label .txt{
-    writing-mode:vertical-rl;
-    text-orientation:mixed;
-    transform:rotate(180deg);
     font-family:var(--mono);
-    font-size:clamp(11px,.95vw,16px);
-    letter-spacing:.24em;
+    font-weight:700;
+    font-size:clamp(15px,1.5vw,24px);
+    letter-spacing:.2em;
     text-transform:uppercase;
     white-space:nowrap;
+    color:#fff;
+    text-shadow:0 1px 3px rgba(0,0,0,.55);
   }
   .label .idx{
-    writing-mode:vertical-rl;
-    text-orientation:mixed;
-    transform:rotate(180deg);
     font-family:var(--mono);
-    font-size:10px;
+    font-size:11px;
     letter-spacing:.2em;
-    color:var(--ink-dim);
+    color:rgba(255,255,255,.75);
+    text-shadow:0 1px 3px rgba(0,0,0,.5);
   }
 
   /* ===== Footer ===== */
@@ -174,8 +172,8 @@
 
     /* No hover on touch: every card keeps a quiet label, and the one
        under your finger comes forward with the scramble reveal. */
-    .label{ opacity:.5; background:transparent; }
-    .card.is-active .label{ opacity:1; background:rgba(250,247,242,.26); }
+    .label{ opacity:.62; background:transparent; }
+    .card.is-active .label{ opacity:1; background:rgba(20,18,15,.26); }
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -218,9 +216,8 @@
 
   <footer>
     <div class="footer-links">
-      <a href="mailto:hello@asadjaleel.com">Email</a>
-      <a href="#">LinkedIn</a>
-      <a href="#">Instagram</a>
+      <a href="mailto:asad.m.jaleel@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/asadjaleel/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
   </footer>
 
@@ -379,8 +376,11 @@
     }
   }, true);
 
-  /* --- Scramble reveal --- */
-  const GLYPHS = '§±#@%&$*<>/\\[]{}=+~^ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  /* --- Scramble reveal ---
+     Only uppercase letters and digits: they share the final text's
+     weight and baseline, so the word stays crisp while it resolves.
+     Thin or low-sitting symbols (~ ^ = + § ±) made it look muddy. */
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const running = new WeakMap();
 
   function scramble(el, finalText){
@@ -388,17 +388,28 @@
     if (prev) cancelAnimationFrame(prev.raf);
 
     const len = finalText.length;
-    // Each character locks in after its own delay, left to right.
+    /* Timed in milliseconds rather than frames, so it runs at the same
+       speed on 60Hz and 120Hz displays. Characters lock in left to
+       right, with the last one landing at exactly 1000ms — so every
+       label finishes together regardless of how long the word is. */
+    const TOTAL = 1000;
     const schedule = Array.from({length: len}, (_, i) => ({
-      start: i * 2,
-      end: i * 2 + 8 + Math.floor(Math.random() * 8)
+      end: len > 1 ? (TOTAL * 0.45) + (TOTAL * 0.55) * (i / (len - 1)) : TOTAL
     }));
 
-    let frame = 0;
+    const t0 = performance.now();
+    let lastGlyph = 0;
+    let cache = '';
     el.classList.add('scrambling');
 
     const state = {};
-    state.raf = requestAnimationFrame(function step(){
+    state.raf = requestAnimationFrame(function step(now){
+      const elapsed = now - t0;
+      // Re-roll the random glyphs ~22x a second so it reads as flicker,
+      // not noise, regardless of refresh rate.
+      const roll = (now - lastGlyph) > 45;
+      if (roll) lastGlyph = now;
+
       let out = '';
       let done = 0;
 
@@ -406,19 +417,18 @@
         const ch = finalText[i];
         if (ch === ' '){ out += ' '; done++; continue; }
 
-        const s = schedule[i];
-        if (frame >= s.end){
+        if (elapsed >= schedule[i].end){
           out += ch;
           done++;
-        } else if (frame >= s.start){
+        } else if (roll || !cache[i]){
           out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
         } else {
-          out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          out += cache[i];
         }
       }
 
+      cache = out;
       el.textContent = out;
-      frame++;
 
       if (done === len){
         el.classList.remove('scrambling');
