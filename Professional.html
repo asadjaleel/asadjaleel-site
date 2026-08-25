@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asad M. Jaleel — Manufacturing &amp; Automation Engineering</title>
+<meta name="description" content="Manufacturing engineering leader and consultant. Capital equipment programs, automation integration, global line transfers, and validation for regulated manufacturers.">
+<meta property="og:title" content="Asad M. Jaleel — Manufacturing &amp; Automation Engineering">
+<meta property="og:description" content="$22M automation program owner. 10+ years taking medical device lines from URS through IQ/OQ/PQ to commercial release. Available for advisory and consulting engagements.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://asadjaleel.com/professional">
+<meta property="og:image" content="https://asadjaleel.com/favicon-512.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon-180.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+<style>
+  :root{
+    --bg:#faf7f2;
+    --ink:#201e1a;
+    --ink-dim:#6b665d;
+    --line:rgba(32,30,26,.15);
+    --accent:#4d6070;
+    --mono:'Courier New', Courier, monospace;
+    --ease:cubic-bezier(.65,0,.35,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{background:var(--bg);}
+  body{font-family:var(--mono);color:var(--ink);}
+  a{color:inherit;text-decoration:none;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--bg);
+    padding:12px 18px;z-index:100;}
+  .skip:focus{left:8px;top:8px;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  /* ---------- Header ---------- */
+  /* Sits in the flow and scrolls away — no persistent bar taking up screen */
+  header{
+    position:relative;
+    z-index:30;
+    padding:22px 28px 14px;
+  }
+  .who{
+    font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);transition:color .2s var(--ease);
+  }
+  .who:hover{color:var(--accent);}
+
+  /* ---------- Page shell ---------- */
+  .page{position:relative;}
+  #belt{
+    position:absolute;
+    inset:0;
+    /* Explicit sizing is required: without it the SVG sizes itself from the
+       viewBox's intrinsic ratio, grows the page, and each rebuild reads a
+       taller page — a runaway loop. */
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+  }
+  .content{
+    position:relative;
+    z-index:1;
+    /* narrow enough that the belt's turns always sit outside the text
+       column — the snake is inset from the page edges, not flush to it */
+    width:min(1040px, calc(100vw - 480px));
+    margin:0 auto;
+  }
+
+  /* ---------- Intro ---------- */
+  .intro{max-width:560px;}
+  .intro h1{font-size:clamp(34px,4.6vw,56px);font-weight:400;letter-spacing:.02em;
+    line-height:1.05;margin-bottom:.5em;}
+  .intro .sub{font-size:14px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:1.4em;}
+  .intro p{font-size:15px;line-height:1.8;color:var(--ink-dim);}
+  .intro .meta{margin-top:1.6em;font-size:13px;color:var(--ink-dim);line-height:2;}
+
+  /* ---------- Experience boxes ---------- */
+  .jobs{padding-bottom:440px;}
+
+  .job{
+    background:#fdfbf7;
+    border:1px solid var(--line);
+    padding:30px 32px;
+    box-shadow:0 1px 2px rgba(32,30,26,.04);
+  }
+  .job + .job{margin-top:var(--gap,330px);}
+  .jobs{margin-top:var(--gap,330px);}
+
+  .job-head{
+    display:flex;justify-content:space-between;gap:20px;
+    flex-wrap:wrap;align-items:baseline;
+    padding-bottom:14px;margin-bottom:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .job-co{font-size:19px;font-weight:700;letter-spacing:.02em;margin:0;}
+  .job-dates{font-size:13px;color:var(--ink-dim);white-space:nowrap;}
+  .job-role{font-size:14px;color:var(--accent);margin-top:3px;}
+  .job-loc{font-size:13px;color:var(--ink-dim);margin-top:2px;}
+
+  .job ul{list-style:none;}
+  .job li{
+    font-size:14px;line-height:1.75;color:var(--ink-dim);
+    padding-left:20px;position:relative;margin-bottom:9px;
+  }
+  .job li:last-child{margin-bottom:0;}
+  .job li::before{content:"–";position:absolute;left:0;color:var(--accent);}
+  .job li b{color:var(--ink);font-weight:700;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    position:relative;z-index:1;
+    width:min(1040px, calc(100vw - 480px));margin:0 auto;
+    padding:40px 0 70px;
+    display:flex;flex-direction:column;align-items:flex-start;gap:22px;
+  }
+  .copy{
+    font-size:12px;letter-spacing:.04em;color:var(--ink-dim);
+    width:100%;padding-top:20px;border-top:1px solid var(--line);
+  }
+  .btn{display:inline-flex;align-items:center;gap:10px;
+    font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--ink);color:var(--bg);padding:14px 24px;
+    transition:background .2s var(--ease);}
+  .btn:hover{background:var(--accent);}
+  .btn svg{width:14px;height:14px;}
+  .links{display:flex;gap:24px;font-size:13px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-dim);}
+  .links a{border-bottom:1px solid transparent;transition:color .2s var(--ease),border-color .2s var(--ease);}
+  .links a:hover{color:var(--ink);border-color:var(--line);}
+
+  /* ---------- Line controller drawer ---------- */
+  /* Intro copy on the left, line controller in the pocket to its right */
+  /* Intro copy left, line controller in the pocket to its right */
+  .top-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:44px;
+    align-items:start;
+    padding:64px 0 44px;
+  }
+  #hmiSlot{margin-top:6px;}
+
+  /* Sits inline at the top of the page by default. Once the reader scrolls
+     past it, it docks to the right edge as a hideable panel. */
+  .drawer{
+    position:relative;
+    width:100%;
+    z-index:60;
+  }
+  /* On the frame it docks, the transform goes none -> translate(100%), which
+     the transition would animate as a slide-out. Suppress it for that frame. */
+  .drawer.no-anim, .drawer.no-anim *{transition:none !important;}
+
+  .drawer.docked{
+    position:fixed;
+    top:50%; right:0;
+    transform:translate(0,-50%);
+    width:min(430px, 92vw);
+    transition:transform .38s var(--ease);
+  }
+  .drawer.docked.closed{transform:translate(100%,-50%);}
+
+  .tab{
+    display:none;                 /* only shown once the panel docks */
+    position:absolute;
+    left:-40px; top:50%;
+    transform:translateY(-50%);
+    width:40px;
+    flex-direction:column;align-items:center;gap:10px;
+    padding:18px 0;
+    font-family:var(--mono);font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;
+    background:var(--ink);color:var(--bg);
+    border:none;border-radius:4px 0 0 4px;
+    cursor:pointer;
+    box-shadow:-3px 0 12px rgba(32,30,26,.16);
+    transition:background .2s var(--ease);
+  }
+  .tab:hover{background:var(--accent);}
+  .tab-txt{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;}
+  .tab-dot{width:9px;height:9px;border-radius:50%;background:#b9b4a8;
+    box-shadow:0 0 0 3px rgba(255,255,255,.09);transition:background .3s var(--ease);}
+  .tab-dot.run{background:#5cc45c;box-shadow:0 0 7px 1px #5cc45c;}
+  .tab-dot.pause{background:#e0a92e;box-shadow:0 0 7px 1px #e0a92e;}
+  .tab-dot.done{background:#e0503a;box-shadow:0 0 7px 1px #e0503a;}
+  .tab-ar{font-size:16px;line-height:1;transition:transform .38s var(--ease);}
+  .drawer.docked .tab{display:flex;}
+  .drawer.docked.closed .tab-ar{transform:rotate(180deg);}
+
+  .drawer .hmi{
+    margin:0;
+    max-height:88vh;
+    overflow-y:auto;
+    box-shadow:-8px 0 26px rgba(32,30,26,.14);
+    border-right:none;
+    border-radius:4px 0 0 4px;
+  }
+  /* Narrow in both places — in the pocket and docked — so it stacks. */
+  .drawer .hmi-body{grid-template-columns:1fr;}
+  .drawer .hmi-ctrl{border-right:none;border-bottom:1px solid var(--line);}
+  .drawer .stack{margin-left:6px;margin-right:auto;}
+  .drawer .stats{grid-template-columns:repeat(3,1fr);}
+  .drawer .stat:nth-child(4){grid-column:span 2;}
+  .drawer #log{height:112px;}
+
+  @media (max-width:560px){
+    .drawer.docked{width:94vw;}
+    .tab{font-size:11px;left:-34px;width:34px;}
+  }
+
+  /* ---------- Production HMI ---------- */
+  .hmi{
+    border:1px solid var(--line);
+    background:#fdfbf7;
+    margin-bottom:10px;
+  }
+  .hmi-top{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:12px 18px;border-bottom:1px solid var(--line);
+    background:#f3efe7;
+  }
+  .hmi-title{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.06em;}
+  .lamp{
+    width:9px;height:9px;border-radius:50%;
+    background:#b9b4a8;box-shadow:0 0 0 3px rgba(185,180,168,.22);
+  }
+  .lamp.run{background:#4f8a4f;box-shadow:0 0 0 3px rgba(79,138,79,.22);animation:lampPulse 1.6s ease-in-out infinite;}
+  .lamp.done{background:var(--accent);box-shadow:0 0 0 3px rgba(77,96,112,.22);}
+  @keyframes lampPulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+  .hmi-state{font-size:12px;letter-spacing:.14em;color:var(--ink-dim);}
+
+  .hmi-body{display:grid;grid-template-columns:1.35fr 1fr;}
+  .hmi-ctrl{padding:18px;border-right:1px solid var(--line);}
+  .hmi-ctrl label{display:block;font-size:12px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-dim);margin-bottom:8px;}
+  .ctrl-row{display:flex;gap:8px;flex-wrap:wrap;}
+  #qty{
+    font-family:var(--mono);font-size:15px;width:92px;
+    padding:9px 10px;border:1px solid var(--line);background:#fff;color:var(--ink);
+  }
+  .ctrl-row button{
+    font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    padding:9px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);
+    cursor:pointer;transition:background .2s var(--ease),opacity .2s var(--ease);
+  }
+  .ctrl-row .b-alt{background:transparent;color:var(--ink);}
+  .ctrl-row button:hover:not(:disabled){background:var(--accent);color:var(--bg);border-color:var(--accent);}
+  .ctrl-row button:disabled{opacity:.35;cursor:not-allowed;}
+  .hint{font-size:12px;line-height:1.6;color:var(--ink-dim);margin-top:10px;}
+
+  /* Andon stack light */
+  .stack{
+    display:flex;flex-direction:column;gap:4px;
+    padding:7px;margin-left:auto;margin-right:auto;
+    background:#3a3a36;border:1px solid #2a2a27;border-radius:4px;
+    align-self:stretch;justify-content:center;
+  }
+  .sl{
+    width:28px;height:15px;border-radius:3px;
+    background:var(--c);opacity:.12;
+    transition:opacity .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .sl.red{--c:#e0503a;}
+  .sl.amber{--c:#e0a92e;}
+  .sl.green{--c:#5cc45c;}
+
+  /* Idle: all three sit lit but held back — steady, no pulsing */
+  .stack.idle .sl{opacity:.62;}
+
+  /* Active: one lamp full and glowing, the other two dark */
+  .stack.run .sl, .stack.pause .sl, .stack.done .sl{opacity:.1;}
+  .stack.run .sl.green,
+  .stack.pause .sl.amber,
+  .stack.done .sl.red{
+    opacity:1;
+    box-shadow:0 0 12px 2px var(--c), inset 0 0 4px rgba(255,255,255,.55);
+  }
+
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);margin-top:16px;}
+  .stat{background:#fdfbf7;padding:11px 6px;text-align:center;}
+  .s-n{display:block;font-size:19px;font-weight:700;line-height:1.2;}
+  .s-n.rej{color:#a8402f;}
+  .s-l{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-dim);margin-top:3px;}
+
+  .bar{height:5px;background:#e8e3d8;margin-top:12px;overflow:hidden;}
+  .bar span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s var(--ease);}
+
+  .hmi-log{padding:18px;min-width:0;}
+  .log-head{font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-dim);margin-bottom:10px;}
+  #log{list-style:none;height:112px;overflow-y:auto;font-size:12px;line-height:1.55;}
+  #log li{padding:3px 0;border-bottom:1px solid rgba(32,30,26,.06);color:var(--ink-dim);
+    display:flex;gap:10px;}
+  #log li .t{color:#a09a8e;}
+  #log li.ok .v{color:#4f8a4f;}
+  #log li.no .v{color:#a8402f;}
+  #log li.sys{color:var(--accent);}
+
+  @media (max-width:760px){
+    .hmi-body{grid-template-columns:1fr;}
+    .hmi-ctrl{border-right:none;border-bottom:1px solid var(--line);}
+    .stats{grid-template-columns:repeat(3,1fr);}
+    .stat:nth-child(4){grid-column:span 2;}
+    #log{height:130px;}
+  }
+
+  /* ---------- Capability + simulation note ---------- */
+  .domains{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:1.5em 0 1.4em;}
+  .domains li{font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);padding:7px 11px;}
+  .lifeline{font-size:12.5px;line-height:1.9;color:var(--accent);margin-bottom:1.4em;}
+  .mail{color:var(--ink-dim);border-bottom:1px solid var(--line);
+    transition:color .2s var(--ease);}
+  .mail:hover{color:var(--ink);}
+  .avail{
+    display:inline-flex;align-items:center;gap:9px;margin-top:14px;
+    font-size:15px;font-weight:700;letter-spacing:.02em;color:var(--ink);
+    border-bottom:1px solid transparent;transition:color .2s var(--ease),border-color .2s var(--ease);
+  }
+  .avail:hover{color:var(--ink);border-color:var(--line);}
+  .avail-dot{
+    width:10px;height:10px;border-radius:50%;background:#5f8a5f;
+    box-shadow:0 0 0 4px rgba(95,138,95,.15);flex:none;
+  }
+  .simnote{font-size:13px;line-height:1.7;color:var(--ink-dim);
+    border-left:2px solid var(--line);padding-left:14px;margin-bottom:1.5em;}
+  .intro .meta{margin-top:0;}
+
+  /* ---------- Bands ---------- */
+  .band{padding:0 0 42px;}
+  .band-head{font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-dim);margin-bottom:16px;}
+
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);}
+  .metrics>div{background:#fdfbf7;padding:20px 14px;}
+  .m-n{display:block;font-size:26px;line-height:1;margin-bottom:8px;}
+  .m-l{display:block;font-size:11px;line-height:1.5;color:var(--ink-dim);}
+
+  .lifecycle{list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
+  .lifecycle li{position:relative;display:flex;align-items:baseline;gap:8px;
+    font-size:12.5px;color:var(--ink);border:1px solid var(--line);
+    background:#fdfbf7;padding:10px 14px;}
+  .lc-n{font-size:10px;letter-spacing:.08em;color:var(--accent);}
+  .lifecycle li:not(:last-child)::after{content:"→";margin-left:8px;color:var(--ink-dim);opacity:.5;}
+
+  .timeline{list-style:none;display:grid;
+    grid-template-columns:repeat(7,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);}
+  .timeline li{background:#fdfbf7;padding:16px 12px;display:flex;flex-direction:column;gap:5px;}
+  .timeline li.now{background:#f3efe7;}
+  .t-y{font-size:12px;letter-spacing:.06em;color:var(--accent);}
+  .t-r{font-size:12.5px;line-height:1.4;}
+  .t-c{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);}
+
+  @media (max-width:1100px){
+    .metrics{grid-template-columns:repeat(2,1fr);}
+    .timeline{grid-template-columns:repeat(4,1fr);}
+  }
+  @media (max-width:1100px){
+    .metrics{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:640px){
+    .timeline{grid-template-columns:repeat(2,1fr);}
+    .lifecycle li:not(:last-child)::after{display:none;}
+    .lifecycle li{font-size:11.5px;padding:8px 10px;}
+  }
+
+  /* ---------- Machine bits ---------- */
+  /* Photoeye: dark until a unit breaks the beam */
+  .sensor{opacity:.14;transition:opacity .1s linear;}
+  .stn.on .sensor{opacity:.22;}
+  .stn.on .sensor.hit{opacity:1;filter:drop-shadow(0 0 6px #e0a92e);}
+
+  /* QC verdict lamps: latch briefly on the result of each inspection */
+  .lamp-ok,.lamp-ng{opacity:.12;transition:opacity .15s linear;}
+  .stn.on .lamp-ok.on{opacity:1;filter:drop-shadow(0 0 7px #5cc45c);}
+  .stn.on .lamp-ng.on{opacity:1;filter:drop-shadow(0 0 7px #e0503a);}
+
+  .stn{opacity:.18;transition:opacity .6s var(--ease);}
+  .stn.on{opacity:1;}
+  /* A station visibly works as a unit passes beneath it */
+  .stn .rot{transition:transform .25s var(--ease);}
+  .stn.on.working .rot.a{animation:spin 1.6s linear infinite;}
+  .stn.on.working .rot.b{animation:spin 1.1s linear infinite reverse;}
+  .cmp{opacity:0;transition:opacity .4s var(--ease);}
+  .cmp.on{opacity:1;}
+  .rot{transform-origin:center;transform-box:fill-box;}
+  .stn.on .rot.a{animation:spin 9s linear infinite;}
+  .stn.on .rot.b{animation:spin 6s linear infinite reverse;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .stn.on .pulse{animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+  /* ---------- Small screens: drop the machine ---------- */
+  @media (max-width:900px){
+    .top-row{grid-template-columns:1fr;gap:26px;padding:40px 0 26px;}
+    .intro{max-width:none;}
+    .content{width:auto;padding:0 18px;}
+    .jobs{padding-bottom:400px;}
+    footer{width:auto;padding:30px 18px 60px;}
+    .job + .job{margin-top:var(--gap-sm,290px);}
+    .jobs{margin-top:var(--gap-sm,290px);}
+    .job{padding:22px 20px;}
+    .intro{padding:46px 0 30px;}
+  }
+  @media (max-width:560px){
+    .job{padding:20px 16px;}
+    .job li{font-size:13px;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#experience">Skip to experience</a>
+
+<header>
+  <a class="who" href="/">Asad Jaleel</a>
+</header>
+
+<div class="page" id="page">
+
+  <svg id="belt" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c9ccd0"/><stop offset="45%" stop-color="#9aa1a8"/>
+        <stop offset="55%" stop-color="#878e96"/><stop offset="100%" stop-color="#aeb4ba"/>
+      </linearGradient>
+      <linearGradient id="beltg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#4a4f55"/><stop offset="40%" stop-color="#33383d"/>
+        <stop offset="100%" stop-color="#42474d"/>
+      </linearGradient>
+      <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#d5d8dc"/><stop offset="50%" stop-color="#a6adb4"/>
+        <stop offset="100%" stop-color="#7d858d"/>
+      </linearGradient>
+      <linearGradient id="armg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#e2e4e7"/><stop offset="50%" stop-color="#b3b9bf"/>
+        <stop offset="100%" stop-color="#8a9198"/>
+      </linearGradient>
+      <linearGradient id="partA" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f2f5f7"/><stop offset="50%" stop-color="#d2d9de"/>
+        <stop offset="100%" stop-color="#a8b1b8"/>
+      </linearGradient>
+      <linearGradient id="partC" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#dba765"/><stop offset="100%" stop-color="#b3762f"/>
+      </linearGradient>
+      <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#dfe8ee" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#9fb3c0" stop-opacity=".8"/>
+      </linearGradient>
+      <filter id="drop" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#201e1a" flood-opacity=".18"/>
+      </filter>
+      <filter id="dropS" x="-40%" y="-40%" width="180%" height="180%">
+        <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#201e1a" flood-opacity=".26"/>
+      </filter>
+      <pattern id="hatch" width="14" height="14" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <rect width="14" height="14" fill="#e9dfc6"/>
+        <rect width="7" height="14" fill="#d9caa2"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <main class="content">
+
+    <div class="top-row">
+    <section class="intro">
+      <h1>Professional</h1>
+      <p>10+ years in FDA-regulated medical device manufacturing. Capital programs, automation, team development, and operational excellence — led manufacturing engineering teams across multiple sites.</p>
+
+      <ul class="domains">
+        <li>Capital equipment programs</li>
+        <li>Automation integration</li>
+        <li>Global line transfers</li>
+        <li>Validation &amp; compliance</li>
+      </ul>
+
+      <p class="lifeline">URS → supplier selection → FAT → SAT → commissioning → IQ/OQ/PQ → production release</p>
+
+      <p class="simnote">The line running down this page is a working simulation — release a work order and watch it run.</p>
+
+      <p class="meta">
+        Orange County, CA · (909) 618-2339<br>
+        <a class="mail" href="mailto:asad.m.jaleel@gmail.com">Asad.M.Jaleel@gmail.com</a>
+      </p>
+
+      <a class="avail" href="mailto:asad.m.jaleel@gmail.com?subject=Consulting%20enquiry&amp;body=Hi%20Asad%2C%0D%0A%0D%0AWe%27re%20looking%20for%20help%20with%3A%0D%0A%0D%0ASite%20%2F%20location%3A%0D%0ATimeline%3A%0D%0A%0D%0AThanks%2C">
+        <span class="avail-dot" aria-hidden="true"></span>
+        Available for advisory &amp; consulting engagements
+      </a>
+    </section>
+
+    <div id="hmiSlot">
+    <aside class="drawer" id="drawer" aria-label="Production line controller">
+      <button class="tab" id="tab" type="button" aria-expanded="true" aria-controls="hmi">
+        <span class="tab-dot" id="tabDot" aria-hidden="true"></span>
+        <span class="tab-txt">HMI</span>
+        <span class="tab-ar" aria-hidden="true">›</span>
+      </button>
+      <section class="hmi" id="hmi" aria-label="Production line simulator">
+      <div class="hmi-top">
+        <div class="hmi-title">
+          <span class="lamp" id="lamp"></span>
+          <span>Line 01 — Cartridge Assembly</span>
+        </div>
+        <div class="hmi-state" id="stateTxt">IDLE</div>
+      </div>
+
+      <div class="hmi-body">
+        <div class="hmi-ctrl">
+          <label for="qty">Work order quantity</label>
+          <div class="ctrl-row">
+            <input id="qty" type="number" min="1" max="500" value="25"
+                   inputmode="numeric" aria-describedby="qtyHelp">
+            <button class="b-run" id="run" type="button">Start</button>
+            <button class="b-alt" id="stop" type="button" disabled>Pause</button>
+            <button class="b-alt" id="reset" type="button">Reset</button>
+            <div class="stack idle" id="stack" role="status" aria-label="Line status indicator">
+              <span class="sl red"></span>
+              <span class="sl amber"></span>
+              <span class="sl green"></span>
+            </div>
+          </div>
+          <p class="hint" id="qtyHelp">Units are released to the line, inspected in process, and either accumulated in the tote or diverted to the reject chute.</p>
+
+          <div class="stats">
+            <div class="stat"><span class="s-n" id="sTarget">0</span><span class="s-l">Target</span></div>
+            <div class="stat"><span class="s-n" id="sGood">0</span><span class="s-l">Good</span></div>
+            <div class="stat"><span class="s-n rej" id="sRej">0</span><span class="s-l">Rejected</span></div>
+            <div class="stat"><span class="s-n" id="sYield">—</span><span class="s-l">Yield</span></div>
+            <div class="stat"><span class="s-n" id="sWip">0</span><span class="s-l">On line</span></div>
+          </div>
+
+          <div class="bar" aria-hidden="true"><span id="barFill"></span></div>
+        </div>
+
+        <div class="hmi-log">
+          <div class="log-head">Live production log</div>
+          <ul id="log" aria-live="polite" aria-atomic="false"></ul>
+        </div>
+      </div>
+      </section>
+    </aside>
+    </div>
+    </div>
+
+    <section class="band" aria-label="Career metrics">
+      <div class="band-head">Selected outcomes</div>
+      <div class="metrics">
+        <div><span class="m-n">$22M</span><span class="m-l">Automation program owned</span></div>
+        <div><span class="m-n">$1.7M</span><span class="m-l">Recurring annual savings</span></div>
+        <div><span class="m-n">200%</span><span class="m-l">Capacity expansion on transfer</span></div>
+        <div><span class="m-n">3</span><span class="m-l">Platforms to first commercial release</span></div>
+      </div>
+    </section>
+
+    <div class="jobs" id="experience">
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">Diasorin</h2>
+            <div class="job-role">Senior Manufacturing Engineer, Lead</div>
+            <div class="job-loc">Cypress, CA</div>
+          </div>
+          <div class="job-dates">Jun 2023 – Present</div>
+        </div>
+        <ul>
+          <li><b>Lead the manufacturing engineering group</b>, evaluating technical options and presenting recommendations to the senior leadership team to guide capital and operational decisions.</li>
+          <li>Own a <b>$22M automation program across its full lifecycle</b>: authoring user requirement specifications, sourcing and selecting automation suppliers to deliver within an allocated capital budget, escalating variances to senior leadership with cost justification, and partnering with Purchasing on contract execution.</li>
+          <li>Served as <b>primary technical interface to the automation integrator</b> from design through delivery, driving international factory acceptance testing (FAT), on-site site acceptance testing (SAT), installation, commissioning, and IQ/OQ/PQ validation to production release.</li>
+          <li>Sustain and improve <b>automated equipment performance after production release</b>, resolving equipment and process issues, tuning cycle time and throughput, and feeding lessons learned back into specifications for subsequent automation projects.</li>
+          <li>Drive <b>Lean adoption and continuous improvement</b> on the floor, standardizing workflows across two sites and building accountability into daily operations.</li>
+          <li>Executed cost reduction strategy delivering <b>$1.7M in recurring annual savings</b> through scrap and rework elimination.</li>
+          <li>Industrialized <b>NES</b>, a new Diasorin platform, from pre-commercial state through process qualification to first commercial release — building manufacturing processes, SOP frameworks, and inspection controls from the ground up.</li>
+          <li>Directed transfer and industrialization of the <b>PLEX</b> product line from Luminex following acquisition, taking a pre-commercial acquired platform through site standup and validation to commercial release.</li>
+          <li>Built an Incoming Quality Control function from the ground up, specifying and implementing <b>CMM, Keyence, and Nikon measurement systems</b>, establishing inspection standards, and training staff to documented procedures.</li>
+          <li>Govern supplier selection and technical engagement, evaluating capability, risk, and total cost to drive sourcing decisions and contract execution in a regulated medical device environment.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">Medtronic</h2>
+            <div class="job-role">Manufacturing Engineer, Global Transfer &amp; Operations · 2-Year Contract</div>
+            <div class="job-loc">Irvine, CA</div>
+          </div>
+          <div class="job-dates">Jan 2021 – Jan 2023</div>
+        </div>
+        <ul>
+          <li><b>Led cross-functional project teams</b> through global transfer of React 68/71 and Pipeline catheter platforms to offshore facilities, expanding manufacturing capacity <b>200%</b>.</li>
+          <li>Owned transfer program execution end to end, governing scope, timeline, and cost across international sites in a regulated environment.</li>
+          <li>Built and institutionalized the core program framework of charters, risk matrices, and integrated timelines, later reused across subsequent transfer efforts.</li>
+          <li>Resolved a critical catheter mandrel yield constraint using structured <b>A3 root cause analysis</b>, restoring production stability.</li>
+          <li>Orchestrated pilot builds and post-transfer validation across global sites using Agile and Waterfall frameworks to confirm production readiness.</li>
+          <li>Directed facility readiness through 5S and spatial redesign, integrating new lines while maintaining cleanroom compliance.</li>
+          <li>Partnered with Sales, Quality, and Product Management to align transfer strategy with commercialization and demand plans.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">The HydraFacial Company</h2>
+            <div class="job-role">Project Manager, Operations &amp; Site Relocation</div>
+            <div class="job-loc">Long Beach, CA</div>
+          </div>
+          <div class="job-dates">Jan 2020 – Jul 2020</div>
+        </div>
+        <ul>
+          <li><b>Led the cross-functional team</b> relocating manufacturing operations from Signal Hill to a new Long Beach facility, directing execution and vendor coordination with no loss of production continuity.</li>
+          <li>Governed <b>SAP HANA implementation</b> across manufacturing, improving inventory tracking accuracy by <b>20%</b>.</li>
+          <li>Directed integrated schedules for complex product line transfers, aligning Engineering, Operations, and Quality to on-time launch.</li>
+          <li>Navigated municipal regulatory requirements with city inspectors, clearing compliance constraints without schedule slip.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">The HydraFacial Company</h2>
+            <div class="job-role">Senior Manufacturing Engineer</div>
+            <div class="job-loc">Long Beach, CA</div>
+          </div>
+          <div class="job-dates">Jun 2019 – Dec 2019</div>
+        </div>
+        <ul>
+          <li>Launched a standardized manufacturing documentation framework covering travelers, rework flows, and SAP routings to support production scalability.</li>
+          <li>Implemented structured SAP inventory architecture across WIP, QA Hold, RTV, and rework locations, improving material control.</li>
+          <li>Drove Lean initiatives via <b>Kaizen and Gemba</b> events, reducing lead times and improving material flow.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">Alcon</h2>
+            <div class="job-role">Project Engineer, ERP Transition &amp; Manufacturing Operations · Contract</div>
+            <div class="job-loc">Irvine, CA</div>
+          </div>
+          <div class="job-dates">Mar 2018 – Jun 2019</div>
+        </div>
+        <ul>
+          <li>Supported enterprise <b>SAP ERP deployment</b> for ORA and LenSx surgical platforms, governing part number mapping, BOM structures, and workstation-level consumption.</li>
+          <li>Led packaging redesign from wood crating to corrugated, cutting unit cost by <b>$70</b> and improving throughput by <b>75%</b>.</li>
+          <li>Designed and deployed <b>Kanban inventory systems</b> with buffer controls, increasing material availability and reducing line interruptions.</li>
+          <li>Coordinated cross-functional verification and validation of packaging changes with Quality, Regulatory Affairs, and Packaging Engineering.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">Presbia</h2>
+            <div class="job-role">Manufacturing Engineer II · Contract</div>
+            <div class="job-loc">Irvine, CA</div>
+          </div>
+          <div class="job-dates">Mar 2017 – Nov 2017</div>
+        </div>
+        <ul>
+          <li>Designed manufacturing fixtures in <b>SolidWorks</b> to improve production efficiency and repeatability.</li>
+          <li>Developed and executed <b>IQ/OQ/PQ validation protocols</b> for a Tyvek pouch sealing process in a regulated environment.</li>
+          <li>Engineered packaging for a lens inserter and managed external vendors through validation testing.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">Citco</h2>
+            <div class="job-role">Manufacturing Engineer I · Contract</div>
+            <div class="job-loc">Walnut, CA</div>
+          </div>
+          <div class="job-dates">Feb 2016 – Jan 2017</div>
+        </div>
+        <ul>
+          <li>Designed and implemented a pneumatic lip balm extraction system, reducing downtime by <b>65%</b>.</li>
+          <li>Supported installation and commissioning of an <b>Allen-Bradley PLC</b> automated assembly line for high-volume production, including controls checkout and line prove-out.</li>
+          <li>Authored <b>PFMEA</b> documentation for an automated filling line to strengthen risk identification and process control.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h2 class="job-co">Education &amp; Certifications</h2>
+            <div class="job-role">Southern California Institute of Technology</div>
+          </div>
+        </div>
+        <ul>
+          <li>B.S. Biomedical Engineering · B.S. Electronics Engineering</li>
+          <li>Certified ScrumMaster® (CSM)</li>
+          <li>PMI Operational Excellence</li>
+          <li>Google Project Management</li>
+        </ul>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="links">
+      <a href="mailto:asad.m.jaleel@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/asadjaleel/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+    <p class="copy">© <span id="yr">2026</span> Asad Jaleel. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const page  = document.getElementById('page');
+  const svg   = document.getElementById('belt');
+  const jobs  = [...document.querySelectorAll('.job')];
+  const NS    = 'http://www.w3.org/2000/svg';
+  const mobile = () => window.matchMedia('(max-width:900px)').matches;
+
+  let path, tread, units = [], stations = [], total = 0;
+
+  const el = (n, attrs = {}) => {
+    const e = document.createElementNS(NS, n);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  };
+
+  const STN_NAMES = {
+    1:['ST-01','INFEED'],
+    2:['ST-02','PRESS'],
+    3:['ST-03','IPC VISION'],
+    4:['ST-04','INSERT'],
+    5:['ST-05','CAP & LABEL'],
+    6:['ST-06','OUTFEED']
+  };
+
+  /* ---- Station drawings, each centred on the belt at (0,0) ---- */
+  function station(kind){
+    const g = el('g', {class:'stn'});
+
+    // Mounting base plate the machine sits on, with bolt-down points
+    const base = el('g', {opacity:.95});
+    base.appendChild(el('rect',{x:-104,y:-224,width:216,height:142,rx:10,
+      fill:'#201e1a','fill-opacity':.13}));
+    base.appendChild(el('rect',{x:-108,y:-232,width:216,height:142,rx:8,
+      fill:'#98a0a7',stroke:'#7a828a','stroke-width':2}));
+    base.appendChild(el('rect',{x:-98,y:-223,width:196,height:124,rx:5,
+      fill:'#a9b0b7'}));
+    base.appendChild(el('rect',{x:-98,y:-223,width:196,height:9,rx:4,
+      fill:'#c6ccd1','fill-opacity':.6}));
+    [[-92,-216],[92,-216],[-92,-106],[92,-106]].forEach(([bx,by]) => {
+      base.appendChild(el('circle',{cx:bx,cy:by,r:6.5,fill:'#6f767d'}));
+      base.appendChild(el('circle',{cx:bx,cy:by,r:2.5,fill:'#3f464c'}));
+    });
+    g.appendChild(base);
+
+    // Cable conduit running off the base
+    const cond = el('g');
+    cond.appendChild(el('path',{d:'M108 -166 q52 0 52 48 v40',fill:'none',
+      stroke:'#8d949b','stroke-width':13,'stroke-linecap':'round'}));
+    cond.appendChild(el('path',{d:'M108 -166 q52 0 52 48 v40',fill:'none',
+      stroke:'#b6bcc2','stroke-width':6,'stroke-linecap':'round'}));
+    g.appendChild(cond);
+
+    const body = el('g');
+
+    if (kind === 1){                       // infeed hopper
+      body.appendChild(el('rect',{x:-105,y:-216,width:210,height:104,rx:12,fill:'url(#metal)'}));
+      body.appendChild(el('rect',{x:-85,y:-200,width:170,height:72,rx:8,fill:'#8d949b'}));
+      body.appendChild(el('path',{d:'M-59 -128 L59 -128 L25 -64 L-25 -64 Z',fill:'url(#armg)'}));
+      body.appendChild(el('circle',{cx:0,cy:-164,r:15,fill:'#cfd4d8'}));
+      const led = el('circle',{cx:0,cy:-164,r:7,fill:'#6b7279'}); led.setAttribute('class','pulse');
+      body.appendChild(led);
+    } else if (kind === 2){                // press
+      body.appendChild(el('circle',{cx:0,cy:-172,r:46,fill:'url(#metal)'}));
+      body.appendChild(el('circle',{cx:0,cy:-172,r:26,fill:'#868d94'}));
+      const arm = el('g',{class:'rot a'});
+      arm.appendChild(el('rect',{x:-11,y:-172,width:22,height:100,rx:9,fill:'url(#armg)'}));
+      body.appendChild(arm);
+      body.appendChild(el('rect',{x:-22,y:-96,width:44,height:30,rx:8,fill:'#9aa1a8'}));
+      body.appendChild(el('circle',{cx:0,cy:-172,r:9,fill:'#c3c8cd'}));
+    } else if (kind === 3){                // vision
+      body.appendChild(el('rect',{x:-65,y:-210,width:130,height:96,rx:12,fill:'url(#metal)'}));
+      body.appendChild(el('rect',{x:-47,y:-194,width:94,height:62,rx:8,fill:'#5f666d'}));
+      body.appendChild(el('circle',{cx:0,cy:-163,r:22,fill:'url(#glass)'}));
+      body.appendChild(el('circle',{cx:0,cy:-163,r:10,fill:'#3c434a'}));
+      body.appendChild(el('circle',{cx:-7,cy:-170,r:4,fill:'#eef4f8','fill-opacity':.9}));
+      g.appendChild(el('path',{d:'M-25 -110 L-65 -40 L65 -40 L25 -110 Z',fill:'#a8402f','fill-opacity':.1}));
+    } else if (kind === 4){                // dual insert
+      body.appendChild(el('rect',{x:-230,y:-214,width:104,height:96,rx:10,fill:'url(#metal)'}));
+      body.appendChild(el('path',{d:'M-208 -118 L-148 -118 L-164 -74 L-192 -74 Z',fill:'url(#armg)'}));
+      body.appendChild(el('rect',{x:126,y:-214,width:104,height:96,rx:10,fill:'url(#metal)'}));
+      body.appendChild(el('path',{d:'M148 -118 L208 -118 L192 -74 L164 -74 Z',fill:'url(#armg)'}));
+      body.appendChild(el('circle',{cx:0,cy:-176,r:48,fill:'url(#metal)'}));
+      const arm = el('g',{class:'rot b'});
+      arm.appendChild(el('rect',{x:-11,y:-176,width:22,height:106,rx:9,fill:'url(#armg)'}));
+      body.appendChild(arm);
+      body.appendChild(el('circle',{cx:0,cy:-176,r:9,fill:'#c3c8cd'}));
+    } else if (kind === 5){                // cap & label
+      body.appendChild(el('rect',{x:-69,y:-216,width:138,height:90,rx:12,fill:'url(#metal)'}));
+      body.appendChild(el('rect',{x:-51,y:-200,width:102,height:58,rx:8,fill:'#8d949b'}));
+      const arm = el('g',{class:'rot a'});
+      arm.appendChild(el('rect',{x:-11,y:-126,width:22,height:86,rx:9,fill:'url(#armg)'}));
+      body.appendChild(arm);
+      body.appendChild(el('rect',{x:-25,y:-64,width:50,height:26,rx:6,fill:'#9aa1a8'}));
+    } else {                               // outfeed + QC
+      body.appendChild(el('rect',{x:-80,y:-214,width:160,height:96,rx:12,fill:'url(#metal)'}));
+      body.appendChild(el('rect',{x:-62,y:-198,width:124,height:62,rx:8,fill:'#8d949b'}));
+      body.appendChild(el('circle',{cx:0,cy:-167,r:17,fill:'#cfd4d8'}));
+      const led = el('circle',{cx:0,cy:-167,r:8,fill:'#a8402f'}); led.setAttribute('class','pulse');
+      body.appendChild(led);
+      // Diverter arm — pushes failed units into the reject chute
+      body.appendChild(el('rect',{x:104,y:-150,width:44,height:52,rx:6,fill:'url(#metal)'}));
+      body.appendChild(el('rect',{x:118,y:-104,width:16,height:34,rx:4,fill:'url(#armg)'}));
+    }
+    g.appendChild(body);
+    // Animated children are lifted out of the filtered group: a filter forces
+    // its whole subtree to re-rasterise every frame, which was costing ~75%
+    // of the frame budget.
+    [...body.querySelectorAll('.rot, .pulse')].forEach(nEl => g.appendChild(nEl));
+
+    // Photoeye sensor post beside the belt — flashes as each unit breaks the beam
+    const post = el('g', {class:'eye'});
+    post.appendChild(el('rect',{x:-152,y:-148,width:26,height:64,rx:4,fill:'url(#metal)'}));
+    post.appendChild(el('circle',{class:'sensor',cx:-139,cy:-128,r:12,fill:'#e0a92e'}));
+    g.appendChild(post);
+
+    // The inspection station also reports the verdict on pass / fail lamps
+    if (kind === 3){
+      const res = el('g', {class:'verdict'});
+      res.appendChild(el('rect',{x:104,y:-162,width:40,height:78,rx:5,fill:'#3a3a36'}));
+      res.appendChild(el('circle',{class:'lamp-ng',cx:124,cy:-142,r:13,fill:'#e0503a'}));
+      res.appendChild(el('circle',{class:'lamp-ok',cx:124,cy:-105,r:13,fill:'#5cc45c'}));
+      g.appendChild(res);
+    }
+
+    // Name plate above the machinery
+    const [id, name] = STN_NAMES[kind];
+    const t1 = el('text',{x:0,y:-282,'text-anchor':'middle',
+      'font-family':'Courier New, monospace','font-size':30,fill:'#55606a'});
+    t1.textContent = id;
+    const t2 = el('text',{x:0,y:-248,'text-anchor':'middle',
+      'font-family':'Courier New, monospace','font-size':26,fill:'#8d9299'});
+    t2.textContent = name;
+    g.appendChild(t1); g.appendChild(t2);
+    return g;
+  }
+
+  /* ---- One product, drawn at the origin ---- */
+  function makeUnit(){
+    const g = el('g');
+    // painted shadow — cheaper than a filter on something that moves
+    g.appendChild(el('rect',{x:-28,y:-12,width:60,height:34,rx:8,
+      fill:'#201e1a','fill-opacity':.16}));
+    g.appendChild(el('rect',{x:-30,y:-17,width:60,height:34,rx:8,fill:'url(#partA)'}));
+    g.appendChild(el('rect',{x:-30,y:-17,width:60,height:7,rx:3,fill:'#fff','fill-opacity':.5}));
+
+    const c2 = el('g',{class:'cmp','data-cmp':2});
+    c2.appendChild(el('rect',{x:7,y:-10,width:20,height:20,rx:5,fill:'#7f878e'}));
+    g.appendChild(c2);
+
+    const c3 = el('g',{class:'cmp','data-cmp':3});
+    c3.appendChild(el('circle',{cx:-21,cy:-10,r:4,fill:'#5f8a5f'}));
+    g.appendChild(c3);
+
+    const c4 = el('g',{class:'cmp','data-cmp':4});
+    c4.appendChild(el('circle',{cx:-18,cy:2,r:7,fill:'url(#partC)'}));
+    c4.appendChild(el('path',{d:'M-5 -6 q5 3 0 6 q-5 3 0 6',fill:'none',stroke:'#6f767d','stroke-width':2}));
+    g.appendChild(c4);
+
+    const c5 = el('g',{class:'cmp','data-cmp':5});
+    c5.appendChild(el('path',{d:'M30 -13 L41 -7 L41 7 L30 13 Z',fill:'#8b9299'}));
+    c5.appendChild(el('rect',{x:-25,y:-7,width:29,height:14,rx:2,fill:'#f4f1ea'}));
+    c5.appendChild(el('line',{x1:-21,y1:-2,x2:0,y2:-2,stroke:'#9aa1a8','stroke-width':1.6}));
+    g.appendChild(c5);
+
+    const c6 = el('g',{class:'cmp','data-cmp':6});
+    c6.appendChild(el('circle',{cx:18,cy:-13,r:5.5,fill:'#5f8a5f'}));
+    g.appendChild(c6);
+    return g;
+  }
+
+  /* ================= Line geometry ================= */
+  let rejectPt = null, rejectNormal = null, totePt = null, toteFill = null, toteTxt = null;
+  let pusherRod = null, pushActive = false, pushT = 0, pushExt = 0;
+  let rejFill = null, rejPt = null;
+  let puffs = [];
+  // Sampled path cache. getPointAtLength costs ~0.4ms a call on a path this
+  // complex, so we sample once per rebuild and interpolate thereafter.
+  let LUT = null, LUTn = 0;
+
+  function buildLUT(){
+    LUTn = Math.max(320, Math.min(900, Math.round(total / 24)));
+    LUT = new Float64Array(LUTn * 2);
+    for (let i = 0; i < LUTn; i++){
+      const p = path.getPointAtLength((i / (LUTn - 1)) * total);
+      LUT[i*2] = p.x; LUT[i*2+1] = p.y;
+    }
+  }
+
+  function ptAt(l){
+    if (!LUT) return {x:0, y:0};
+    const t = Math.max(0, Math.min(1, l / total)) * (LUTn - 1);
+    const i = Math.min(LUTn - 2, Math.floor(t));
+    const f = t - i;
+    return {
+      x: LUT[i*2]     + (LUT[(i+1)*2]     - LUT[i*2])     * f,
+      y: LUT[i*2 + 1] + (LUT[(i+1)*2 + 1] - LUT[i*2 + 1]) * f
+    };
+  }
+  let entryD = 0;   // distance along the path before it enters the frame
+  let DIVERT_F = 0.955;            // set in build(): a fixed distance before
+                                   // the outfeed, so it always lands in the
+                                   // clear zone rather than behind a card
+  let inspectF = 0.5;              // set from the vision station
+
+  function build(){
+    [...svg.children].forEach(n => { if (n.tagName !== 'defs') n.remove(); });
+    const defs = svg.querySelector('defs');
+    [...defs.querySelectorAll('#LINE')].forEach(n => n.remove());
+    stations = [];
+    live.forEach(u => u.el.remove());
+    live.length = 0;
+    puffs.forEach(p => p.el.remove()); puffs = [];
+
+    const narrow = mobile();
+    const W = page.clientWidth;
+    const H = page.scrollHeight;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    // 'none' lets the drawing flex with the container between rebuilds, so
+    // dragging the window edge stays visually continuous instead of frozen.
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.removeAttribute('width');
+    svg.removeAttribute('height');
+
+    const pageTop = page.getBoundingClientRect().top + window.scrollY;
+    const yOf = (el, edge) => el.getBoundingClientRect()[edge] + window.scrollY - pageTop;
+    // The first belt run sits below the HMI panel, not just the intro text
+    // The belt starts below everything above the experience list
+    // Belt begins below everything that precedes the experience list
+    const above = [...document.querySelectorAll('.band, #hmiSlot, .top-row')];
+    const introBottom = Math.max(...above.map(elm => yOf(elm, 'bottom')));
+    const footTop = yOf(document.querySelector('footer'), 'top');
+
+    const rows = [];
+    jobs.forEach((j, i) => {
+      const prev = i === 0 ? introBottom : yOf(jobs[i-1], 'bottom');
+      rows.push((prev + yOf(j, 'top')) / 2);
+    });
+    rows.push(Math.min(yOf(jobs[jobs.length-1], 'bottom') + 215, footTop - 60));
+
+    const scale = narrow ? 0.40 : 0.50;
+    const bw    = narrow ? 54 : 84;
+    let d;
+
+    if (narrow){
+      const cx = Math.round(W / 2);
+      d = `M ${cx},${rows[0]} V ${rows[rows.length-1]}`;
+    } else {
+      const m = Math.max(90, Math.min(170, W * 0.115));
+      const r = 62;
+      // The infeed run begins beyond the left edge of the frame, so the line
+      // reads as continuing from an upstream process off-screen. Everything
+      // downstream, including the outfeed, is unchanged.
+      const infeedX = -(bw * 1.6);
+      d = `M ${infeedX},${rows[0]}`;
+      for (let i = 0; i < rows.length; i++){
+        const dir  = (i % 2 === 0) ? 1 : -1;
+        const endX = dir === 1 ? W - m : m;
+        if (i < rows.length - 1){
+          const sweep = dir === 1 ? 1 : 0;
+          d += ` H ${endX - dir*r} a ${r},${r} 0 0 ${sweep} ${dir*r},${r}`;
+          d += ` V ${rows[i+1] - r} a ${r},${r} 0 0 ${sweep} ${-dir*r},${r}`;
+        } else {
+          d += ` H ${endX}`;
+        }
+      }
+    }
+
+    path = el('path', {id:'LINE', d, fill:'none'});
+    defs.appendChild(path);
+    total = path.getTotalLength();
+    buildLUT();
+
+    const layer = (stroke, width, extra = {}) =>
+      svg.appendChild(el('use', Object.assign({href:'#LINE', stroke, 'stroke-width':width}, extra)));
+
+    layer('url(#hatch)', bw * 1.78, {opacity:.4});
+    layer('#f1ede4', bw * 1.45);
+
+    // Frame cross-members underneath, poking out past the side rails
+    const frameG = el('g', {opacity:.9});
+    const step = bw * 4.4;
+    for (let l = step * 0.5; l < total; l += step){
+      const pt = ptAt(l);
+      const nx = ptAt(Math.min(total, l + 6));
+      const ang = Math.atan2(nx.y - pt.y, nx.x - pt.x) * 180 / Math.PI;
+      const cm = el('rect', {x:-9, y:-bw*0.78, width:18, height:bw*1.56, rx:3, fill:'#7e858c'});
+      cm.setAttribute('transform', `translate(${pt.x} ${pt.y}) rotate(${ang})`);
+      frameG.appendChild(cm);
+    }
+    svg.appendChild(frameG);
+
+    // painted contact shadow (an SVG filter here re-rasterises the whole path)
+    svg.appendChild(el('use',{href:'#LINE', stroke:'#201e1a', 'stroke-width':bw*1.24,
+      opacity:.15, transform:'translate(0 7)'}));
+    layer('url(#steel)', bw * 1.24);
+    layer('#eef0f2', bw * 1.16, {opacity:.55});      // rail sheen
+    layer('#6f767d', bw * 1.1);
+    layer('#22262a', bw * 1.02);                     // shadow line under the rail lip
+    layer('url(#beltg)', bw);
+    // Wide belt plates with a fine seam — a coarse, low-contrast pattern is
+    // far easier on the eye than dense stripes flickering past.
+    tread = el('use', {id:'tread', href:'#LINE', stroke:'#474d54', 'stroke-width':bw,
+                       'stroke-dasharray':'7 88', 'stroke-linecap':'butt'});
+    svg.appendChild(tread);
+
+    // How much of the infeed sits off-screen, so the first unit of an order
+    // can be released right at the frame edge instead of crawling in.
+    entryD = 0;
+    for (let l = 0; l < Math.min(600, total); l += 6){
+      if (ptAt(l).x >= -6){ entryD = Math.max(0, l - 24); break; }
+    }
+
+    const fractionAt = (x, y) => {
+      let best = 0, bestD = Infinity;
+      for (let i = 0; i < LUTn; i++){
+        const dd = (LUT[i*2] - x) ** 2 + (LUT[i*2+1] - y) ** 2;
+        if (dd < bestD){ bestD = dd; best = i / (LUTn - 1); }
+      }
+      return best;
+    };
+
+    const count = Math.min(6, rows.length);
+    for (let n = 1; n <= count; n++){
+      const f = fractionAt(narrow ? Math.round(W/2) : W/2, rows[n-1]);
+      const pt = ptAt(f * total);
+      const g = station(n);
+      g.setAttribute('transform', `translate(${pt.x} ${pt.y}) scale(${scale})`);
+      g.dataset.f = f;
+      g._sensor = g.querySelector('.sensor');
+      g._ok = g.querySelector('.lamp-ok');
+      g._ng = g.querySelector('.lamp-ng');
+      svg.appendChild(g);
+      stations.push(g);
+    }
+    inspectF = stations[2] ? +stations[2].dataset.f : 0.5;
+
+    /* ---- Reject chute and accumulation tote ---- */
+    const normalAt = (l) => {
+      const a = ptAt(Math.max(0, l - 4));
+      const b = ptAt(Math.min(total, l + 4));
+      const tx = b.x - a.x, ty = b.y - a.y;
+      const len = Math.hypot(tx, ty) || 1;
+      // Push bins into the open space: below a horizontal run, beside a vertical one.
+      if (Math.abs(ty / len) < 0.5) return {x:0, y:1};
+      return {x: 1, y: 0};
+    };
+
+    DIVERT_F = 1 - Math.min(0.3, 110 / total);
+    const dl = DIVERT_F * total;
+    rejectPt = ptAt(dl);
+    rejectNormal = normalAt(dl);
+    const endPt = ptAt(total);
+    const endN  = normalAt(total);
+
+    const chuteLen = narrow ? 92 : 118;
+    const rx = rejectPt.x + rejectNormal.x * chuteLen;
+    const ry = rejectPt.y + rejectNormal.y * chuteLen;
+
+    /* Pneumatic diverter: sits opposite the chute and strokes across the
+       belt to push a failed unit off the line. */
+    const n = rejectNormal;
+    const bodyOff = bw * 0.5 + 54;
+    const px = rejectPt.x - n.x * bodyOff;
+    const py = rejectPt.y - n.y * bodyOff;
+    pushExt = bw * 0.5 + 26;
+
+    const pusher = el('g');
+    const horiz = Math.abs(n.y) > 0.5;          // chute below => cylinder above
+    // cylinder body
+    pusher.appendChild(el('rect', horiz
+      ? {x:px-38, y:py-26, width:76, height:46, rx:7, fill:'url(#metal)'}
+      : {x:px-26, y:py-38, width:46, height:76, rx:7, fill:'url(#metal)'}));
+    pusher.appendChild(el('rect', horiz
+      ? {x:px-30, y:py-18, width:60, height:14, rx:4, fill:'#8d949b'}
+      : {x:px-18, y:py-30, width:14, height:60, rx:4, fill:'#8d949b'}));
+
+    // rod + paddle (this is the part that moves)
+    pusherRod = el('g', {id:'pusherRod'});
+    pusherRod.appendChild(el('rect', horiz
+      ? {x:px-7, y:py+16, width:14, height:30, rx:3, fill:'#b6bcc2'}
+      : {x:px+16, y:py-7, width:30, height:14, rx:3, fill:'#b6bcc2'}));
+    pusherRod.appendChild(el('rect', horiz
+      ? {x:px-30, y:py+42, width:60, height:13, rx:4, fill:'#7d848b'}
+      : {x:px+42, y:py-30, width:13, height:60, rx:4, fill:'#7d848b'}));
+    pusher.appendChild(pusherRod);
+    svg.appendChild(pusher);
+
+    // Chute ramp
+    const chute = el('g', {class:'chute'});
+    chute.appendChild(el('line',{x1:rejectPt.x,y1:rejectPt.y,x2:rx,y2:ry,
+      stroke:'url(#steel)','stroke-width':46,'stroke-linecap':'round'}));
+    chute.appendChild(el('line',{x1:rejectPt.x,y1:rejectPt.y,x2:rx,y2:ry,
+      stroke:'#8a9198','stroke-width':34,'stroke-linecap':'round'}));
+    svg.appendChild(chute);
+
+    // Reject bin
+    const bin = el('g');
+    rejPt = {x:rx, y:ry};
+    bin.appendChild(el('rect',{x:rx-34,y:ry,width:68,height:52,rx:5,
+      fill:'#201e1a','fill-opacity':.13}));
+    bin.appendChild(el('rect',{x:rx-34,y:ry-6,width:68,height:52,rx:5,
+      fill:'#f0e4df'}));
+    rejFill = el('rect',{x:rx-30,y:ry+42,width:60,height:0,fill:'#c2705e'});
+    bin.appendChild(rejFill);
+    bin.appendChild(el('rect',{x:rx-34,y:ry-6,width:68,height:52,rx:5,
+      fill:'none',stroke:'#a8402f','stroke-width':2}));
+    const bt = el('text',{x:rx,y:ry+66,'text-anchor':'middle',
+      'font-family':'Courier New, monospace','font-size':12,fill:'#a8402f'});
+    bt.textContent = 'REJECT';
+    bin.appendChild(bt);
+    svg.appendChild(bin);
+
+    // Accumulation tote at the end of the line
+    const tx0 = endPt.x + endN.x * (narrow ? 96 : 120);
+    const ty0 = endPt.y + endN.y * (narrow ? 96 : 120);
+    totePt = {x:tx0, y:ty0};
+    const tote = el('g');
+    tote.appendChild(el('rect',{x:tx0-46,y:ty0-6,width:92,height:70,rx:8,
+      fill:'#201e1a','fill-opacity':.13}));
+    tote.appendChild(el('rect',{x:tx0-46,y:ty0-14,width:92,height:70,rx:6,
+      fill:'#eceadf',stroke:'#6f767d','stroke-width':2}));
+    toteFill = el('rect',{x:tx0-42,y:ty0+52,width:84,height:0,fill:'#8ba58b'});
+    tote.appendChild(toteFill);
+    tote.appendChild(el('rect',{x:tx0-46,y:ty0-14,width:92,height:70,rx:6,
+      fill:'none',stroke:'#6f767d','stroke-width':2}));
+    toteTxt = el('text',{x:tx0,y:ty0+76,'text-anchor':'middle',
+      'font-family':'Courier New, monospace','font-size':13,fill:'#55606a'});
+    toteTxt.textContent = 'TOTE 0';
+    tote.appendChild(toteTxt);
+    svg.appendChild(tote);
+
+    /* ---- Stadium floodlight masts along the outer edges ----
+       Seen from above: a mast stands near the edge of the frame and throws a
+       beam inward across the empty floor. The beam fades out well before it
+       reaches the text, so it lights the floor, never the words. */
+    if (!narrow){
+      const col  = document.querySelector('.content').getBoundingClientRect();
+      const colL = col.left, colR = col.right;
+
+      jobs.forEach((j, i) => {
+        const top = yOf(j, 'top'), bot = yOf(j, 'bottom');
+        const cy  = (top + bot) / 2;
+
+        // Mast sits on the side the conveyor isn't using, close to the edge
+        const onLeft = (i % 2 === 0);
+        const fx  = onLeft ? 44 : W - 44;
+        const dir = onLeft ? 1 : -1;
+
+        // Beam stops short of the card edge
+        const headX = fx + dir * 26;
+        const stopX = (onLeft ? colL : colR) - dir * 54;
+        const throwLen = Math.abs(stopX - headX);
+        if (throwLen < 60) return;
+
+        const headHalf = 40;
+        const endHalf  = Math.min(Math.max(120, (bot - top) * 0.34), 200);
+
+        // Gradient fades the beam to nothing before the text
+        const gid = 'beam' + i;
+        const grad = el('linearGradient', {
+          id: gid, gradientUnits: 'userSpaceOnUse',
+          x1: headX, y1: cy, x2: stopX, y2: cy
+        });
+        [['0%', '#ffe9ae', .5], ['45%', '#fff0c8', .22],
+         ['80%', '#fff6de', .06], ['100%', '#fff9ea', 0]].forEach(([o, col2, op]) => {
+          grad.appendChild(el('stop', {offset:o, 'stop-color':col2, 'stop-opacity':op}));
+        });
+        svg.querySelector('defs').appendChild(grad);
+
+        const beam = el('polygon', {
+          points: `${headX},${cy-headHalf} ${stopX},${cy-endHalf} ${stopX},${cy+endHalf} ${headX},${cy+headHalf}`,
+          fill: `url(#${gid})`
+        });
+        svg.appendChild(beam);
+
+        // The mast itself
+        const mast = el('g');
+        mast.appendChild(el('circle',{cx:fx, cy:cy+6, r:20, fill:'#201e1a','fill-opacity':.14}));
+        mast.appendChild(el('circle',{cx:fx, cy, r:19, fill:'#8d949b'}));
+        mast.appendChild(el('circle',{cx:fx, cy, r:11, fill:'#6f767d'}));
+        mast.appendChild(el('rect',{x: onLeft ? fx : fx-26, y: cy-7, width:26, height:14, rx:4,
+          fill:'url(#metal)'}));
+        // lamp head, perpendicular to the throw
+        mast.appendChild(el('rect',{x: headX - (onLeft ? 0 : 16), y: cy-42, width:16, height:84, rx:4,
+          fill:'url(#metal)', stroke:'#7a828a','stroke-width':1.5}));
+        for (let k = 0; k < 4; k++){
+          mast.appendChild(el('rect',{
+            x: headX - (onLeft ? -2 : 14), y: cy - 34 + k * 18,
+            width:10, height:13, rx:2, fill:'#fff6dd'}));
+        }
+        svg.appendChild(mast);
+      });
+    }
+
+    setStations(state.running);
+    render();
+  }
+
+  /* ================= Simulation ================= */
+  const state = {target:0, released:0, good:0, reject:0, running:false, done:false, id:0};
+  const live = [];
+  const REJECT_RATE = 0.08;
+  const REASONS = ['DIMENSIONAL','SEAL INTEGRITY','SURFACE DEFECT','CAP SEATING','LABEL SKEW'];
+
+  const $ = id => document.getElementById(id);
+  const elLamp=$('lamp'), elState=$('stateTxt'), elLog=$('log'), elBar=$('barFill');
+  const elStack=$('stack');
+  const elTabDot = $('tabDot');
+  const setStack = s => {
+    elStack.className = 'stack ' + s;
+    // mirror onto the docked tab so state is legible without opening it
+    elTabDot.className = 'tab-dot' + (s === 'idle' ? '' : ' ' + s);
+  };
+
+  function stamp(){
+    const d = new Date();
+    return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+  }
+  function log(text, cls){
+    const li = document.createElement('li');
+    if (cls) li.className = cls;
+    li.innerHTML = `<span class="t">${stamp()}</span><span class="v">${text}</span>`;
+    elLog.prepend(li);
+    while (elLog.children.length > 60) elLog.lastChild.remove();
+  }
+
+  function setStations(on){
+    stations.forEach(g => g.classList.toggle('on', !!on));
+  }
+
+  let hudSig = '';
+  function hud(){
+    // Only touch the DOM when a number actually changed
+    const sig = [state.target, state.good, state.reject, live.length].join('|');
+    if (sig === hudSig) return;
+    hudSig = sig;
+    $('sTarget').textContent = state.target;
+    $('sGood').textContent   = state.good;
+    $('sRej').textContent    = state.reject;
+    $('sWip').textContent    = live.length;
+    const fin = state.good + state.reject;
+    $('sYield').textContent  = fin ? Math.round(state.good / fin * 100) + '%' : '—';
+    // Progress tracks GOOD units against the order, since rejects are remade
+    elBar.style.width = state.target ? (Math.min(1, state.good / state.target) * 100) + '%' : '0%';
+
+    if (toteTxt) toteTxt.textContent = 'TOTE ' + state.good;
+    if (toteFill){
+      const h = 62 * Math.min(1, state.good / Math.max(1, state.target));
+      toteFill.setAttribute('height', h);
+      toteFill.setAttribute('y', (totePt.y + 52) - h);
+    }
+    if (rejFill && rejPt){
+      // Bin fills against a realistic allowance rather than the whole order
+      const cap = Math.max(6, state.target * 0.45);
+      const h = 46 * Math.min(1, state.reject / cap);
+      rejFill.setAttribute('height', h);
+      rejFill.setAttribute('y', (rejPt.y + 42) - h);
+    }
+  }
+
+  function spawn(first){
+    state.released++;
+    state.id++;
+    const g = makeUnit();
+    g.setAttribute('data-id', state.id);
+    svg.appendChild(g);
+    live.push({el:g, d:first ? entryD : 0, id:state.id, inspected:false, pass:true,
+               phase:'line', t:0,
+               scale: mobile() ? 0.8 : 1,
+               cmps:[...g.querySelectorAll('.cmp')].reduce((a,c)=>(a[c.dataset.cmp]=c,a),{})});
+  }
+
+  function place(u, x, y, ang, s){
+    u.el.setAttribute('transform', `translate(${x} ${y}) rotate(${ang}) scale(${s})`);
+  }
+
+  function render(){
+    if (!path) return;
+    if (tread) tread.style.strokeDashoffset = -treadOffset;
+    live.forEach(u => {
+      if (u.phase === 'line'){
+        const l = u.d;
+        const pt = ptAt(l);
+        const nx = ptAt(Math.min(total, l + 6));
+        const a  = Math.atan2(nx.y - pt.y, nx.x - pt.x) * 180 / Math.PI;
+        place(u, pt.x, pt.y, a, u.scale);
+      }
+    });
+  }
+
+  const SPEED_S = 62;                       // seconds for a full traverse
+  const RELEASE_S = 3.2;                    // seconds between releases
+  let treadOffset = 0, sinceRelease = 0, last = 0, raf = null;
+
+  function tick(now){
+    raf = requestAnimationFrame(tick);
+    if (!last) last = now;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    if (!path) return;
+
+    const speed = total / SPEED_S;
+
+    if (state.running){
+      treadOffset += speed * dt;
+      sinceRelease += dt;
+      // Release while the order is still short of GOOD units, counting what's
+      // already on the line. A reject therefore triggers a replacement build.
+      const committed = state.good + live.length;
+      if (committed < state.target && sinceRelease >= RELEASE_S){
+        const first = state.released === 0;
+        sinceRelease = 0;
+        spawn(first);
+      }
+    }
+
+    for (let i = live.length - 1; i >= 0; i--){
+      const u = live[i];
+
+      if (u.phase === 'line'){
+        if (state.running) u.d += speed * dt;
+        const f = u.d / total;
+
+        stations.forEach((g, si) => {
+          const c = u.cmps[si + 1];
+          if (c) c.classList.toggle('on', f >= (+g.dataset.f) - 0.005);
+        });
+
+        if (!u.inspected && f >= inspectF){
+          u.inspected = true;
+          u.pass = Math.random() > REJECT_RATE;
+          const mark = u.cmps[3];
+          if (mark && !u.pass){
+            mark.querySelector('circle').setAttribute('fill', '#a8402f');
+          }
+          const qc = stations[2];
+          if (qc){
+            const lamp = u.pass ? qc._ok : qc._ng;
+            const other = u.pass ? qc._ng : qc._ok;
+            if (other) other.classList.remove('on');
+            if (lamp){
+              lamp.classList.add('on');
+              clearTimeout(qc._t);
+              qc._t = setTimeout(() => lamp.classList.remove('on'), 1400);
+            }
+          }
+          if (u.pass) log(`UNIT ${String(u.id).padStart(4,'0')} · PASS`, 'ok');
+          else log(`UNIT ${String(u.id).padStart(4,'0')} · REJECT — ${REASONS[Math.floor(Math.random()*REASONS.length)]}`, 'no');
+        }
+
+        if (!u.pass && f >= DIVERT_F){
+          u.phase = 'divert'; u.t = 0;
+          // Kick the cylinder and register the reject immediately
+          pushActive = true; pushT = 0;
+          // exhaust puff from the cylinder
+          const pf = el('circle',{cx:rejectPt.x - rejectNormal.x*30,
+                                  cy:rejectPt.y - rejectNormal.y*30,
+                                  r:8, fill:'#ffffff','fill-opacity':.7});
+          svg.appendChild(pf);
+          puffs.push({el:pf, t:0});
+          state.reject++;
+          log(`UNIT ${String(u.id).padStart(4,'0')} · DIVERTED TO REJECT — REBUILD SCHEDULED`, 'no');
+          hud();
+        }
+        else if (u.d >= total){ u.phase = 'drop'; u.t = 0; }
+      }
+      else if (u.phase === 'divert'){
+        u.t += dt / 0.75;
+        const k = Math.min(1, u.t);
+        const bx = rejectPt.x + rejectNormal.x * (mobile() ? 92 : 118);
+        const by = rejectPt.y + rejectNormal.y * (mobile() ? 92 : 118);
+        place(u, rejectPt.x + (bx - rejectPt.x) * k,
+                 rejectPt.y + (by - rejectPt.y) * k,
+                 0, u.scale * (1 - 0.45 * k));
+        u.el.style.opacity = 1 - k;
+        if (k >= 1){ u.el.remove(); live.splice(i,1); finishCheck(); }
+      }
+      else if (u.phase === 'drop'){
+        u.t += dt / 0.55;
+        const k = Math.min(1, u.t);
+        const ep = ptAt(total);
+        place(u, ep.x + (totePt.x - ep.x) * k,
+                 ep.y + (totePt.y - ep.y) * k,
+                 0, u.scale * (1 - 0.5 * k));
+        u.el.style.opacity = 1 - k * 0.9;
+        if (k >= 1){ u.el.remove(); live.splice(i,1); state.good++; finishCheck(); }
+      }
+    }
+
+    // Air puffs fade and expand
+    for (let i = puffs.length - 1; i >= 0; i--){
+      const pf = puffs[i];
+      pf.t += dt / 0.55;
+      const k = Math.min(1, pf.t);
+      pf.el.setAttribute('r', 8 + k * 26);
+      pf.el.setAttribute('fill-opacity', (1 - k) * 0.55);
+      if (k >= 1){ pf.el.remove(); puffs.splice(i, 1); }
+    }
+
+    // Diverter stroke: extend across the belt, then retract
+    if (pushActive && pusherRod){
+      pushT += dt / 0.8;
+      const e = Math.sin(Math.min(1, pushT) * Math.PI) * pushExt;
+      pusherRod.setAttribute('transform',
+        `translate(${rejectNormal.x * e} ${rejectNormal.y * e})`);
+      if (pushT >= 1){
+        pushActive = false;
+        pusherRod.setAttribute('transform', 'translate(0 0)');
+      }
+    }
+
+    // Photoeyes: lit while a unit is inside the station's detection window
+    const WINDOW = 0.008;
+    stations.forEach(g => {
+      if (!g._sensor) return;
+      const sf = +g.dataset.f;
+      const broken = live.some(u => u.phase === 'line' &&
+                                    Math.abs(u.d / total - sf) < WINDOW);
+      g._sensor.classList.toggle('hit', broken);
+      g.classList.toggle('working', broken);
+    });
+
+    render();
+    hud();
+  }
+
+  function finishCheck(){
+    if (state.running && state.good >= state.target && live.length === 0){
+      state.running = false; state.done = true;
+      elLamp.className = 'lamp done';
+      elState.textContent = 'ORDER COMPLETE';
+      setStack('done');
+      setStations(false);
+      $('run').disabled = false; $('run').textContent = 'Start';
+      $('stop').disabled = true;
+      const y = state.good + state.reject
+        ? Math.round(state.good / (state.good + state.reject) * 100) : 0;
+      log(`ORDER COMPLETE · ${state.good} GOOD / ${state.reject} REJECT · ${state.released} BUILT · YIELD ${y}%`, 'sys');
+    }
+  }
+
+  /* ================= Controls ================= */
+  function start(){
+    const n = Math.max(1, Math.min(500, parseInt($('qty').value, 10) || 1));
+    $('qty').value = n;
+    if (state.done || state.target === 0 || state.good >= state.target){
+      state.target = n; state.released = 0; state.good = 0; state.reject = 0;
+      state.done = false; state.id = 0;
+      live.forEach(u => u.el.remove()); live.length = 0;
+      elLog.innerHTML = '';
+      log(`WORK ORDER RELEASED · ${n} UNITS`, 'sys');
+    }
+    state.running = true;
+    sinceRelease = RELEASE_S;      // release the first unit on the next frame
+    elLamp.className = 'lamp run';
+    elState.textContent = 'RUNNING';
+    setStack('run');
+    setStations(true);
+    $('run').disabled = true; $('stop').disabled = false;
+    hud();
+  }
+  function pause(){
+    state.running = false;
+    elLamp.className = 'lamp';
+    elState.textContent = 'PAUSED';
+    setStack('pause');
+    setStations(false);
+    $('run').disabled = false; $('run').textContent = 'Resume';
+    $('stop').disabled = true;
+    log('LINE PAUSED', 'sys');
+  }
+  function reset(){
+    state.running = false; state.done = false;
+    state.target = 0; state.released = 0; state.good = 0; state.reject = 0; state.id = 0;
+    live.forEach(u => u.el.remove()); live.length = 0;
+    treadOffset = 0;
+    elLamp.className = 'lamp';
+    elState.textContent = 'IDLE';
+    setStack('idle');
+    setStations(false);
+    $('run').disabled = false; $('run').textContent = 'Start';
+    $('stop').disabled = true;
+    elLog.innerHTML = '';
+    hud(); render();
+  }
+
+  /* ---- HMI: inline at the top, docks to the edge once scrolled past ---- */
+  const drawer = $('drawer'), tabBtn = $('tab'), slot = $('hmiSlot');
+  let docked = false;
+
+  function setDrawer(open){
+    drawer.classList.toggle('closed', !open);
+    tabBtn.setAttribute('aria-expanded', String(open));
+    tabBtn.querySelector('.tab-txt').textContent = open ? 'Hide HMI' : 'HMI';
+  }
+
+  function setDocked(on){
+    if (on === docked) return;
+    docked = on;
+    drawer.classList.add('no-anim');
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      drawer.classList.remove('no-anim')));
+    if (on){
+      // Freeze the slot height first so the page doesn't jump as it detaches
+      slot.style.height = slot.getBoundingClientRect().height + 'px';
+      drawer.classList.add('docked');
+      // Always dock closed — the panel is there if wanted, never in the way
+      setDrawer(false);
+    } else {
+      drawer.classList.remove('docked', 'closed');
+      slot.style.height = '';
+    }
+  }
+
+  function syncDock(){
+    const r = slot.getBoundingClientRect();
+    // dock once the inline panel has scrolled off the top
+    setDocked(docked ? r.top < 80 : r.bottom < 8);
+  }
+
+  tabBtn.addEventListener('click', () => setDrawer(drawer.classList.contains('closed')));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && docked && !drawer.classList.contains('closed')) setDrawer(false);
+  });
+  window.addEventListener('scroll', syncDock, {passive:true});
+  syncDock();
+
+  log('LINE IDLE · AWAITING WORK ORDER', 'sys');
+
+  // Copyright year, so it never goes stale
+  const yr = document.getElementById('yr');
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  $('run').addEventListener('click', start);
+  $('stop').addEventListener('click', pause);
+  $('reset').addEventListener('click', reset);
+  $('qty').addEventListener('keydown', e => { if (e.key === 'Enter') start(); });
+
+  // Rebuild on any layout change — resize, zoom, or font loading. The redraw
+  // is debounced, and skipped entirely if the box hasn't really moved.
+  let rt, lastW = 0, lastH = 0;
+  const rebuild = () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      const w = page.clientWidth, h = page.scrollHeight;
+      if (Math.abs(w - lastW) < 4 && Math.abs(h - lastH) < 24) return;
+      lastW = w; lastH = h;
+      build();
+    }, 90);
+  };
+  window.addEventListener('resize', rebuild);
+  if (window.ResizeObserver) new ResizeObserver(rebuild).observe(page);
+
+  build();
+  hud();
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    raf = requestAnimationFrame(tick);
+  }
+})();
+
+</script>
+
+</body>
+</html>
