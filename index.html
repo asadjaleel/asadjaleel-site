@@ -38,26 +38,11 @@
   .page{ height:100vh; }
 
   /* Scrims keep the overlaid header/footer legible over any photo */
-  .page::before,
-  .page::after{
-    content:"";
-    position:fixed;
-    left:0;right:0;
-    height:170px;
-    z-index:5;
-    pointer-events:none;
-  }
-  .page::before{
-    top:0;
-    background:linear-gradient(180deg, rgba(250,247,242,.92) 0%, rgba(250,247,242,0) 100%);
-  }
-  .page::after{
-    bottom:0;
-    background:linear-gradient(0deg, rgba(250,247,242,.92) 0%, rgba(250,247,242,0) 100%);
-  }
-
   /* ===== Header ===== */
   header{
+    /* difference blend so the name reads dark on light photos and light on
+       dark ones, without needing a scrim behind it */
+    mix-blend-mode:difference;
     position:fixed;
     top:0;left:0;right:0;
     padding:26px 30px;
@@ -66,6 +51,7 @@
   .name{
     font-family:var(--mono);
     font-weight:500;
+    color:#fff;
     font-size:clamp(20px,1.9vw,30px);
     letter-spacing:.16em;
     text-transform:uppercase;
@@ -158,6 +144,7 @@
 
   /* ===== Footer ===== */
   footer{
+    mix-blend-mode:difference;
     position:fixed;
     bottom:0;left:0;right:0;
     display:flex;
@@ -175,6 +162,12 @@
   footer a{ transition:color .25s var(--ease); }
   footer a:hover{ color:var(--ink); }
   .footer-links{ display:flex; gap:22px; }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{
+    color:#fff;                  /* inverts against the photo behind it */
+    transition:opacity .2s var(--ease);
+  }
+  .footer-links a:hover{ opacity:.6; }
 
   /* ===== Responsive ===== */
   @media (max-width:1000px){
