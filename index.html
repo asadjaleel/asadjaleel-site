@@ -105,8 +105,22 @@
     position:absolute;inset:0;
     width:100%;height:100%;
     object-fit:cover;
-    object-position:center;
+    /* Which part of the photo stays visible when it's cropped.
+       Override per card with style="--pos: 70% center" on the <img>.
+       First value = horizontal (0% far left, 50% centre, 100% far right),
+       second = vertical (0% top, 50% middle, 100% bottom). */
+    object-position:var(--pos, 50% 50%);
+    transition:filter .4s var(--ease);
   }
+
+  /* Focus: while the cursor is over the strip, everything recedes except the
+     card being pointed at, which lifts slightly brighter than normal. */
+  .viewport:hover .card img{ filter:brightness(.58) saturate(.9); }
+  .viewport .card:hover img{ filter:brightness(1.06) saturate(1.04); }
+
+  /* Same behaviour under a finger on touch screens */
+  .viewport.focus-mode .card img{ filter:brightness(.58) saturate(.9); }
+  .viewport.focus-mode .card.is-active img{ filter:brightness(1.06) saturate(1.04); }
 
   /* Scramble label */
   .label{
@@ -118,7 +132,7 @@
     justify-content:flex-start;
     padding:66vh 20px 20px;
     gap:10px;
-    background:rgba(20,18,15,.26);
+    background:rgba(20,18,15,.10);
     opacity:0;
     transition:opacity .45s var(--ease);
   }
@@ -173,7 +187,7 @@
     /* No hover on touch: every card keeps a quiet label, and the one
        under your finger comes forward with the scramble reveal. */
     .label{ opacity:.62; background:transparent; }
-    .card.is-active .label{ opacity:1; background:rgba(20,18,15,.26); }
+    .card.is-active .label{ opacity:1; background:rgba(20,18,15,.10); }
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -195,19 +209,19 @@
       <!-- Sets are cloned by JS for a seamless loop -->
       <div class="item">
         <a class="card" href="/professional" data-name="Professional" data-idx="01">
-          <img src="images/professional.jpg" alt="" onerror="this.style.display='none'">
+          <img src="images/professional.jpg" alt="" style="--pos: 70% 50%" onerror="this.style.display='none'">
           <span class="label"><span class="txt">Professional</span><span class="idx">01</span></span>
         </a>
       </div>
       <div class="item">
         <a class="card" href="/photography" data-name="Photography" data-idx="02">
-          <img src="images/photography.jpg" alt="" onerror="this.style.display='none'">
+          <img src="images/photography.jpg" alt="" style="--pos: 50% 50%" onerror="this.style.display='none'">
           <span class="label"><span class="txt">Photography</span><span class="idx">02</span></span>
         </a>
       </div>
       <div class="item">
         <a class="card" href="/personal" data-name="Personal" data-idx="03">
-          <img src="images/personal.jpg" alt="" onerror="this.style.display='none'">
+          <img src="images/personal.jpg" alt="" style="--pos: 50% 66%" onerror="this.style.display='none'">
           <span class="label"><span class="txt">Personal</span><span class="idx">03</span></span>
         </a>
       </div>
@@ -309,6 +323,7 @@
     const card = el && el.closest ? el.closest('.card') : null;
     if (!card || card === activeCard) return;
 
+    viewport.classList.add('focus-mode');
     if (activeCard) activeCard.classList.remove('is-active');
     activeCard = card;
     card.classList.add('is-active');
