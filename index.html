@@ -99,14 +99,37 @@
     transition:filter .4s var(--ease);
   }
 
-  /* Focus: while the cursor is over the strip, everything recedes except the
-     card being pointed at, which lifts slightly brighter than normal. */
-  .viewport:hover .card img{ filter:brightness(.58) saturate(.9); }
-  .viewport .card:hover img{ filter:brightness(1.06) saturate(1.04); }
+  /* Focus: while the cursor is over the strip, every card recedes. The card
+     under the cursor is lit by the .lit layer below, not by brightening here. */
+  .viewport:hover .card > img{ filter:brightness(.58) saturate(.9); }
 
-  /* Same behaviour under a finger on touch screens */
-  .viewport.focus-mode .card img{ filter:brightness(.58) saturate(.9); }
-  .viewport.focus-mode .card.is-active img{ filter:brightness(1.06) saturate(1.04); }
+  /* Lit copy of the photo, revealed by a circle that grows from wherever the
+     cursor entered the card until it covers the whole tile. */
+  .lit{
+    position:absolute; inset:0;
+    display:block;
+    pointer-events:none;
+    clip-path:circle(0% at var(--mx,50%) var(--my,50%));
+    transition:clip-path 400ms cubic-bezier(.22,1,.36,1);
+  }
+  .lit img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:var(--pos, 50% 50%);
+    filter:brightness(1.12) saturate(1.06);
+  }
+  /* spread out from the entry point */
+  .card.lit-on .lit{ clip-path:circle(150% at var(--mx) var(--my)); }
+  /* leave: uniform fade, no contracting back toward the exit */
+  .card.lit-out .lit{ opacity:0; transition:opacity 550ms ease; }
+
+  /* Touch: no cursor to spread from, so just cross-fade the lit copy in */
+  .viewport.focus-mode .card > img{ filter:brightness(.58) saturate(.9); }
+  .viewport.focus-mode .card.is-active .lit{
+    clip-path:circle(150% at 50% 50%);
+    transition:clip-path 400ms cubic-bezier(.22,1,.36,1);
+  }
 
   /* Scramble label */
   .label{
@@ -203,18 +226,21 @@
       <div class="item">
         <a class="card" href="/professional" data-name="Professional" data-idx="01">
           <img src="images/professional.jpg" alt="" style="--pos: 70% 50%" onerror="this.style.display='none'">
+          <span class="lit" aria-hidden="true"><img src="images/professional.jpg" alt="" style="--pos: 70% 50%" onerror="this.style.display='none'"></span>
           <span class="label"><span class="txt">Professional</span><span class="idx">01</span></span>
         </a>
       </div>
       <div class="item">
         <a class="card" href="/photography" data-name="Photography" data-idx="02">
           <img src="images/photography.jpg" alt="" style="--pos: 50% 50%" onerror="this.style.display='none'">
+          <span class="lit" aria-hidden="true"><img src="images/photography.jpg" alt="" style="--pos: 50% 50%" onerror="this.style.display='none'"></span>
           <span class="label"><span class="txt">Photography</span><span class="idx">02</span></span>
         </a>
       </div>
       <div class="item">
         <a class="card" href="/personal" data-name="Personal" data-idx="03">
           <img src="images/personal.jpg" alt="" style="--pos: 50% 66%" onerror="this.style.display='none'">
+          <span class="lit" aria-hidden="true"><img src="images/personal.jpg" alt="" style="--pos: 50% 66%" onerror="this.style.display='none'"></span>
           <span class="label"><span class="txt">Personal</span><span class="idx">03</span></span>
         </a>
       </div>
@@ -244,6 +270,7 @@
   }
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isHoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ================= Marquee engine =================
      Driven in JS rather than CSS so a swipe can interrupt it
@@ -450,10 +477,38 @@
     running.set(el, state);
   }
 
+  /* Light spreads from wherever the cursor entered the card, then holds lit
+     until it leaves. The origin is locked at entry — following the live cursor
+     makes the light lurch sideways mid-spread. */
+  function litEnter(card, e){
+    const r = card.getBoundingClientRect();
+    const mx = ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%';
+    const my = ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%';
+    clearTimeout(card._litT);
+    card.classList.remove('lit-out');
+    card.style.setProperty('--mx', mx);
+    card.style.setProperty('--my', my);
+    void card.offsetWidth;              // commit the origin before growing
+    card.classList.add('lit-on');
+  }
+
+  function litLeave(card){
+    card.classList.add('lit-out');      // fade out flat, don't contract
+    clearTimeout(card._litT);
+    card._litT = setTimeout(() => {
+      card.classList.remove('lit-on', 'lit-out');
+    }, 560);
+  }
+
   /* Bind to every card, including the clones. */
   track.querySelectorAll('.card').forEach(card => {
     const txt = card.querySelector('.txt');
     const finalText = card.dataset.name;
+
+    if (isHoverCapable){
+      card.addEventListener('mouseenter', e => litEnter(card, e));
+      card.addEventListener('mouseleave', () => litLeave(card));
+    }
 
     card.addEventListener('mouseenter', () => scramble(txt, finalText));
     card.addEventListener('focus', () => scramble(txt, finalText));
