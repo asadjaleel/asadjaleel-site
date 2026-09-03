@@ -463,25 +463,26 @@
 })();
 /* ============================================================
    SMPTE contrast text
-   Samples the pixels directly behind the name and the footer
-   links, inverts that colour, then snaps the result to the
-   nearest SMPTE colour-bar hue. Runs live, so the colours shift
-   as photos slide past underneath.
+   Samples the artwork behind each text element every 10px across
+   its width, picks the SMPTE bar that best opposes each column,
+   and paints them as hard vertical bands clipped to the glyphs.
+   Because each band is tied to the pixel currently behind it, the
+   colours travel through the letters in step with the marquee.
    ============================================================ */
 (function(){
-  // SMPTE bars, with the hue and relative lightness of each
   const BARS = {
-    white:   {rgb:[255,255,255], hue:null, lum:1.00},
-    yellow:  {rgb:[255,255,0],   hue:60,   lum:0.93},
-    cyan:    {rgb:[0,255,255],   hue:180,  lum:0.79},
-    green:   {rgb:[0,255,0],     hue:120,  lum:0.72},
-    magenta: {rgb:[255,0,255],   hue:300,  lum:0.29},
-    red:     {rgb:[255,0,0],     hue:0,    lum:0.21},
-    blue:    {rgb:[0,0,255],     hue:240,  lum:0.07},
-    black:   {rgb:[0,0,0],       hue:null, lum:0.00}
+    white:   {css:'#ffffff', hue:null, lum:1.00},
+    yellow:  {css:'#ffff00', hue:60,   lum:0.93},
+    cyan:    {css:'#00ffff', hue:180,  lum:0.79},
+    green:   {css:'#00ff00', hue:120,  lum:0.72},
+    magenta: {css:'#ff00ff', hue:300,  lum:0.29},
+    red:     {css:'#ff0000', hue:0,    lum:0.21},
+    blue:    {css:'#0000ff', hue:240,  lum:0.07},
+    black:   {css:'#000000', hue:null, lum:0.00}
   };
   const CHROMA = ['yellow','cyan','green','magenta','red','blue'];
   const PAGE_BG = [250,247,242];
+  const STEP = 10;                      // band width in px
 
   const targets = [
     document.querySelector('.name'),
@@ -490,97 +491,122 @@
   if (!targets.length) return;
 
   const cv = document.createElement('canvas');
-  cv.width = cv.height = 12;
   const cx = cv.getContext('2d', { willReadFrequently: true });
   let tainted = false;
 
   function hsl(r,g,b){
     r/=255; g/=255; b/=255;
-    const mx = Math.max(r,g,b), mn = Math.min(r,g,b), d = mx-mn;
-    let h = 0;
-    if (d){
-      if (mx===r)      h = ((g-b)/d) % 6;
-      else if (mx===g) h = (b-r)/d + 2;
-      else             h = (r-g)/d + 4;
-      h *= 60; if (h<0) h += 360;
+    const mx=Math.max(r,g,b), mn=Math.min(r,g,b), d=mx-mn;
+    let h=0;
+    if(d){
+      if(mx===r)      h=((g-b)/d)%6;
+      else if(mx===g) h=(b-r)/d+2;
+      else            h=(r-g)/d+4;
+      h*=60; if(h<0) h+=360;
     }
-    const l = (mx+mn)/2;
-    // raw chroma, not HSL saturation: saturation is wildly inflated near white
-    // and would read the cream page background as a strong orange.
-    return {h, c:d, l};
+    return {h, c:d, l:(mx+mn)/2};
   }
 
-  /* Opposite of what's behind, snapped to a SMPTE bar.
-     Matching on hue rather than raw RGB distance: the inverse of any mid-tone
-     sits closer to black or white than to a saturated corner, so a plain
-     nearest-RGB match would almost never pick an actual colour bar. */
+  /* Bar that best opposes this backdrop colour. Matched on hue: the RGB
+     inverse of any mid-tone sits nearer black or white than any colour bar,
+     so a plain nearest-RGB match would never pick an actual bar. */
   function oppositeBar(r,g,b){
     const {h,c,l} = hsl(r,g,b);
-
-    // near-neutral backdrop has no meaningful hue to oppose
-    if (c < 0.13) return l > 0.5 ? BARS.black.rgb : BARS.white.rgb;
-
+    if (c < 0.13) return l > 0.5 ? BARS.black.css : BARS.white.css;
     const comp = (h + 180) % 360;
-    const ranked = CHROMA.slice().sort((a,bk) => {
-      const da = Math.min(Math.abs(BARS[a].hue - comp), 360 - Math.abs(BARS[a].hue - comp));
-      const db = Math.min(Math.abs(BARS[bk].hue - comp), 360 - Math.abs(BARS[bk].hue - comp));
-      return da - db;
+    const ranked = CHROMA.slice().sort((a,bk)=>{
+      const da = Math.min(Math.abs(BARS[a].hue-comp), 360-Math.abs(BARS[a].hue-comp));
+      const db = Math.min(Math.abs(BARS[bk].hue-comp), 360-Math.abs(BARS[bk].hue-comp));
+      return da-db;
     });
-    // closest opposing hue that also separates in lightness enough to read
-    for (const name of ranked){
-      if (Math.abs(BARS[name].lum - l) >= 0.22) return BARS[name].rgb;
-    }
-    return l > 0.5 ? BARS.black.rgb : BARS.white.rgb;
+    for (const n of ranked)
+      if (Math.abs(BARS[n].lum - l) >= 0.22) return BARS[n].css;
+    return l > 0.5 ? BARS.black.css : BARS.white.css;
   }
 
-  /* Average colour of the artwork sitting under a viewport point. */
-  function sampleAt(px, py){
+  /* Map a viewport point onto its source pixel in whichever card is behind. */
+  function cardPixel(px, py){
     for (const card of document.querySelectorAll('.card')){
       const r = card.getBoundingClientRect();
       if (px < r.left || px > r.right || py < r.top || py > r.bottom) continue;
       const img = card.querySelector('img');
-      if (!img || !img.naturalWidth || img.style.display === 'none') return PAGE_BG;
-
-      // undo object-fit:cover + object-position to find the source pixel
+      if (!img || !img.naturalWidth || img.style.display === 'none') return null;
       const nw = img.naturalWidth, nh = img.naturalHeight;
-      const scale = Math.max(r.width / nw, r.height / nh);
-      const dw = nw * scale, dh = nh * scale;
+      const scale = Math.max(r.width/nw, r.height/nh);
       const pos = getComputedStyle(img).objectPosition.split(' ');
-      const fx = (parseFloat(pos[0]) || 50) / 100;
-      const fy = (parseFloat(pos[1]) || 50) / 100;
-      const offX = (r.width  - dw) * fx;
-      const offY = (r.height - dh) * fy;
-      const sx = (px - r.left - offX) / scale;
-      const sy = (py - r.top  - offY) / scale;
+      const fx = (parseFloat(pos[0]) || 50)/100;
+      const fy = (parseFloat(pos[1]) || 50)/100;
+      const offX = (r.width  - nw*scale)*fx;
+      const offY = (r.height - nh*scale)*fy;
+      return {
+        img,
+        sx: Math.max(0, Math.min(nw-1, (px - r.left - offX)/scale)),
+        sy: Math.max(0, Math.min(nh-1, (py - r.top  - offY)/scale))
+      };
+    }
+    return null;
+  }
 
-      try{
-        cx.clearRect(0,0,12,12);
-        cx.drawImage(img, Math.max(0, sx-6), Math.max(0, sy-6), 12, 12, 0, 0, 12, 12);
-        const d = cx.getImageData(0,0,12,12).data;
-        let R=0,G=0,B=0;
-        for (let i=0;i<d.length;i+=4){ R+=d[i]; G+=d[i+1]; B+=d[i+2]; }
-        const n = d.length/4;
-        return [R/n, G/n, B/n];
-      } catch(e){
-        tainted = true;      // cross-origin image; stop trying
-        return PAGE_BG;
+  function paint(el){
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const cols = Math.max(1, Math.ceil(r.width / STEP));
+    cv.width = cols; cv.height = 1;
+
+    // one tiny draw per band, then a single pixel read for the whole strip
+    let any = false;
+    for (let i = 0; i < cols; i++){
+      const px = r.left + i*STEP + STEP/2;
+      const hit = cardPixel(px, r.top + r.height/2);
+      if (hit){
+        try { cx.drawImage(hit.img, hit.sx, hit.sy, 1, 1, i, 0, 1, 1); any = true; }
+        catch(e){ tainted = true; return; }
+      } else {
+        cx.fillStyle = `rgb(${PAGE_BG[0]},${PAGE_BG[1]},${PAGE_BG[2]})`;
+        cx.fillRect(i,0,1,1);
       }
     }
-    return PAGE_BG;          // over the page background, not a photo
+
+    let data;
+    try { data = cx.getImageData(0,0,cols,1).data; }
+    catch(e){ tainted = true; return; }
+
+    // hard-edged bands: each colour stops exactly where the next begins
+    const stops = [];
+    for (let i = 0; i < cols; i++){
+      const col = oppositeBar(data[i*4], data[i*4+1], data[i*4+2]);
+      stops.push(`${col} ${i*STEP}px`, `${col} ${(i+1)*STEP}px`);
+    }
+    el.style.backgroundImage = `linear-gradient(90deg, ${stops.join(',')})`;
+  }
+
+  function revert(){
+    for (const el of targets){
+      el.style.backgroundImage = '';
+      el.style.webkitBackgroundClip = '';
+      el.style.backgroundClip = '';
+      el.style.color = '';
+    }
   }
 
   function tick(){
-    if (tainted) return;                       // give up quietly
-    for (const el of targets){
-      const r = el.getBoundingClientRect();
-      if (!r.width) continue;
-      const [R,G,B] = sampleAt(r.left + r.width/2, r.top + r.height/2);
-      const c = oppositeBar(R,G,B);
-      el.style.color = `rgb(${c[0]},${c[1]},${c[2]})`;
-    }
+    if (tainted){ revert(); return; }   // canvas unreadable — leave plain text
+    for (const el of targets) paint(el);
+    requestAnimationFrame(tick);
   }
 
-  const start = () => { tick(); setInterval(tick, 130); };
+  function start(){
+    // clip the bands to the glyphs, so only the letters are coloured
+    for (const el of targets){
+      el.style.webkitBackgroundClip = 'text';
+      el.style.backgroundClip = 'text';
+      el.style.color = 'transparent';
+      el.style.backgroundRepeat = 'no-repeat';
+      el.style.transition = 'none';
+    }
+    requestAnimationFrame(tick);
+  }
+
   if (document.readyState === 'complete') start();
   else window.addEventListener('load', start);
 })();
