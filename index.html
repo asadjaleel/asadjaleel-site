@@ -159,9 +159,11 @@
   footer a{ transition:color .25s var(--ease); }
   footer a:hover{ color:var(--ink); }
   .footer-links{ display:flex; gap:22px; }
-  .footer-links{ display:flex; gap:22px; }
-  .footer-links a{ transition:color .28s linear; }
-  .footer-links a{ transition:opacity .2s var(--ease); }
+  .footer-links a{
+    font-size:13px;              /* slightly up from the 11px footer default */
+    color:var(--ink);            /* fixed — no adapting to the backdrop */
+    transition:opacity .2s var(--ease);
+  }
   .footer-links a:hover{ opacity:.7; }
 
   /* ===== Responsive ===== */
@@ -484,10 +486,9 @@
   const PAGE_BG = [250,247,242];
   const STEP = 10;                      // band width in px
 
-  const targets = [
-    document.querySelector('.name'),
-    ...document.querySelectorAll('.footer-links a')
-  ].filter(Boolean);
+  // Only the name gets the banded treatment — at 13px the links read better
+  // as plain text.
+  const targets = [document.querySelector('.name')].filter(Boolean);
   if (!targets.length) return;
 
   const cv = document.createElement('canvas');
