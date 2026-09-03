@@ -40,18 +40,16 @@
   /* Scrims keep the overlaid header/footer legible over any photo */
   /* ===== Header ===== */
   header{
-    /* difference blend so the name reads dark on light photos and light on
-       dark ones, without needing a scrim behind it */
-    mix-blend-mode:difference;
     position:fixed;
     top:0;left:0;right:0;
     padding:26px 30px;
     z-index:10;
   }
   .name{
+    display:inline-block;
     font-family:var(--mono);
     font-weight:500;
-    color:#fff;
+    transition:color .28s linear;
     font-size:clamp(20px,1.9vw,30px);
     letter-spacing:.16em;
     text-transform:uppercase;
@@ -99,37 +97,14 @@
     transition:filter .4s var(--ease);
   }
 
-  /* Focus: while the cursor is over the strip, every card recedes. The card
-     under the cursor is lit by the .lit layer below, not by brightening here. */
-  .viewport:hover .card > img{ filter:brightness(.58) saturate(.9); }
+  /* Focus: while the cursor is over the strip, everything recedes except the
+     card being pointed at, which lifts slightly brighter than normal. */
+  .viewport:hover .card img{ filter:brightness(.58) saturate(.9); }
+  .viewport .card:hover img{ filter:brightness(1.06) saturate(1.04); }
 
-  /* Lit copy of the photo, revealed by a circle that grows from wherever the
-     cursor entered the card until it covers the whole tile. */
-  .lit{
-    position:absolute; inset:0;
-    display:block;
-    pointer-events:none;
-    clip-path:circle(0% at var(--mx,50%) var(--my,50%));
-    transition:clip-path 400ms cubic-bezier(.22,1,.36,1);
-  }
-  .lit img{
-    position:absolute; inset:0;
-    width:100%; height:100%;
-    object-fit:cover;
-    object-position:var(--pos, 50% 50%);
-    filter:brightness(1.12) saturate(1.06);
-  }
-  /* spread out from the entry point */
-  .card.lit-on .lit{ clip-path:circle(150% at var(--mx) var(--my)); }
-  /* leave: uniform fade, no contracting back toward the exit */
-  .card.lit-out .lit{ opacity:0; transition:opacity 550ms ease; }
-
-  /* Touch: no cursor to spread from, so just cross-fade the lit copy in */
-  .viewport.focus-mode .card > img{ filter:brightness(.58) saturate(.9); }
-  .viewport.focus-mode .card.is-active .lit{
-    clip-path:circle(150% at 50% 50%);
-    transition:clip-path 400ms cubic-bezier(.22,1,.36,1);
-  }
+  /* Same behaviour under a finger on touch screens */
+  .viewport.focus-mode .card img{ filter:brightness(.58) saturate(.9); }
+  .viewport.focus-mode .card.is-active img{ filter:brightness(1.06) saturate(1.04); }
 
   /* Scramble label */
   .label{
@@ -167,7 +142,6 @@
 
   /* ===== Footer ===== */
   footer{
-    mix-blend-mode:difference;
     position:fixed;
     bottom:0;left:0;right:0;
     display:flex;
@@ -186,11 +160,9 @@
   footer a:hover{ color:var(--ink); }
   .footer-links{ display:flex; gap:22px; }
   .footer-links{ display:flex; gap:22px; }
-  .footer-links a{
-    color:#fff;                  /* inverts against the photo behind it */
-    transition:opacity .2s var(--ease);
-  }
-  .footer-links a:hover{ opacity:.6; }
+  .footer-links a{ transition:color .28s linear; }
+  .footer-links a{ transition:opacity .2s var(--ease); }
+  .footer-links a:hover{ opacity:.7; }
 
   /* ===== Responsive ===== */
   @media (max-width:1000px){
@@ -226,21 +198,18 @@
       <div class="item">
         <a class="card" href="/professional" data-name="Professional" data-idx="01">
           <img src="images/professional.jpg" alt="" style="--pos: 70% 50%" onerror="this.style.display='none'">
-          <span class="lit" aria-hidden="true"><img src="images/professional.jpg" alt="" style="--pos: 70% 50%" onerror="this.style.display='none'"></span>
           <span class="label"><span class="txt">Professional</span><span class="idx">01</span></span>
         </a>
       </div>
       <div class="item">
         <a class="card" href="/photography" data-name="Photography" data-idx="02">
           <img src="images/photography.jpg" alt="" style="--pos: 50% 50%" onerror="this.style.display='none'">
-          <span class="lit" aria-hidden="true"><img src="images/photography.jpg" alt="" style="--pos: 50% 50%" onerror="this.style.display='none'"></span>
           <span class="label"><span class="txt">Photography</span><span class="idx">02</span></span>
         </a>
       </div>
       <div class="item">
         <a class="card" href="/personal" data-name="Personal" data-idx="03">
           <img src="images/personal.jpg" alt="" style="--pos: 50% 66%" onerror="this.style.display='none'">
-          <span class="lit" aria-hidden="true"><img src="images/personal.jpg" alt="" style="--pos: 50% 66%" onerror="this.style.display='none'"></span>
           <span class="label"><span class="txt">Personal</span><span class="idx">03</span></span>
         </a>
       </div>
@@ -270,7 +239,6 @@
   }
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isHoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ================= Marquee engine =================
      Driven in JS rather than CSS so a swipe can interrupt it
@@ -477,38 +445,10 @@
     running.set(el, state);
   }
 
-  /* Light spreads from wherever the cursor entered the card, then holds lit
-     until it leaves. The origin is locked at entry — following the live cursor
-     makes the light lurch sideways mid-spread. */
-  function litEnter(card, e){
-    const r = card.getBoundingClientRect();
-    const mx = ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%';
-    const my = ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%';
-    clearTimeout(card._litT);
-    card.classList.remove('lit-out');
-    card.style.setProperty('--mx', mx);
-    card.style.setProperty('--my', my);
-    void card.offsetWidth;              // commit the origin before growing
-    card.classList.add('lit-on');
-  }
-
-  function litLeave(card){
-    card.classList.add('lit-out');      // fade out flat, don't contract
-    clearTimeout(card._litT);
-    card._litT = setTimeout(() => {
-      card.classList.remove('lit-on', 'lit-out');
-    }, 560);
-  }
-
   /* Bind to every card, including the clones. */
   track.querySelectorAll('.card').forEach(card => {
     const txt = card.querySelector('.txt');
     const finalText = card.dataset.name;
-
-    if (isHoverCapable){
-      card.addEventListener('mouseenter', e => litEnter(card, e));
-      card.addEventListener('mouseleave', () => litLeave(card));
-    }
 
     card.addEventListener('mouseenter', () => scramble(txt, finalText));
     card.addEventListener('focus', () => scramble(txt, finalText));
@@ -520,6 +460,129 @@
       txt.textContent = finalText;
     });
   });
+})();
+/* ============================================================
+   SMPTE contrast text
+   Samples the pixels directly behind the name and the footer
+   links, inverts that colour, then snaps the result to the
+   nearest SMPTE colour-bar hue. Runs live, so the colours shift
+   as photos slide past underneath.
+   ============================================================ */
+(function(){
+  // SMPTE bars, with the hue and relative lightness of each
+  const BARS = {
+    white:   {rgb:[255,255,255], hue:null, lum:1.00},
+    yellow:  {rgb:[255,255,0],   hue:60,   lum:0.93},
+    cyan:    {rgb:[0,255,255],   hue:180,  lum:0.79},
+    green:   {rgb:[0,255,0],     hue:120,  lum:0.72},
+    magenta: {rgb:[255,0,255],   hue:300,  lum:0.29},
+    red:     {rgb:[255,0,0],     hue:0,    lum:0.21},
+    blue:    {rgb:[0,0,255],     hue:240,  lum:0.07},
+    black:   {rgb:[0,0,0],       hue:null, lum:0.00}
+  };
+  const CHROMA = ['yellow','cyan','green','magenta','red','blue'];
+  const PAGE_BG = [250,247,242];
+
+  const targets = [
+    document.querySelector('.name'),
+    ...document.querySelectorAll('.footer-links a')
+  ].filter(Boolean);
+  if (!targets.length) return;
+
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = 12;
+  const cx = cv.getContext('2d', { willReadFrequently: true });
+  let tainted = false;
+
+  function hsl(r,g,b){
+    r/=255; g/=255; b/=255;
+    const mx = Math.max(r,g,b), mn = Math.min(r,g,b), d = mx-mn;
+    let h = 0;
+    if (d){
+      if (mx===r)      h = ((g-b)/d) % 6;
+      else if (mx===g) h = (b-r)/d + 2;
+      else             h = (r-g)/d + 4;
+      h *= 60; if (h<0) h += 360;
+    }
+    const l = (mx+mn)/2;
+    // raw chroma, not HSL saturation: saturation is wildly inflated near white
+    // and would read the cream page background as a strong orange.
+    return {h, c:d, l};
+  }
+
+  /* Opposite of what's behind, snapped to a SMPTE bar.
+     Matching on hue rather than raw RGB distance: the inverse of any mid-tone
+     sits closer to black or white than to a saturated corner, so a plain
+     nearest-RGB match would almost never pick an actual colour bar. */
+  function oppositeBar(r,g,b){
+    const {h,c,l} = hsl(r,g,b);
+
+    // near-neutral backdrop has no meaningful hue to oppose
+    if (c < 0.13) return l > 0.5 ? BARS.black.rgb : BARS.white.rgb;
+
+    const comp = (h + 180) % 360;
+    const ranked = CHROMA.slice().sort((a,bk) => {
+      const da = Math.min(Math.abs(BARS[a].hue - comp), 360 - Math.abs(BARS[a].hue - comp));
+      const db = Math.min(Math.abs(BARS[bk].hue - comp), 360 - Math.abs(BARS[bk].hue - comp));
+      return da - db;
+    });
+    // closest opposing hue that also separates in lightness enough to read
+    for (const name of ranked){
+      if (Math.abs(BARS[name].lum - l) >= 0.22) return BARS[name].rgb;
+    }
+    return l > 0.5 ? BARS.black.rgb : BARS.white.rgb;
+  }
+
+  /* Average colour of the artwork sitting under a viewport point. */
+  function sampleAt(px, py){
+    for (const card of document.querySelectorAll('.card')){
+      const r = card.getBoundingClientRect();
+      if (px < r.left || px > r.right || py < r.top || py > r.bottom) continue;
+      const img = card.querySelector('img');
+      if (!img || !img.naturalWidth || img.style.display === 'none') return PAGE_BG;
+
+      // undo object-fit:cover + object-position to find the source pixel
+      const nw = img.naturalWidth, nh = img.naturalHeight;
+      const scale = Math.max(r.width / nw, r.height / nh);
+      const dw = nw * scale, dh = nh * scale;
+      const pos = getComputedStyle(img).objectPosition.split(' ');
+      const fx = (parseFloat(pos[0]) || 50) / 100;
+      const fy = (parseFloat(pos[1]) || 50) / 100;
+      const offX = (r.width  - dw) * fx;
+      const offY = (r.height - dh) * fy;
+      const sx = (px - r.left - offX) / scale;
+      const sy = (py - r.top  - offY) / scale;
+
+      try{
+        cx.clearRect(0,0,12,12);
+        cx.drawImage(img, Math.max(0, sx-6), Math.max(0, sy-6), 12, 12, 0, 0, 12, 12);
+        const d = cx.getImageData(0,0,12,12).data;
+        let R=0,G=0,B=0;
+        for (let i=0;i<d.length;i+=4){ R+=d[i]; G+=d[i+1]; B+=d[i+2]; }
+        const n = d.length/4;
+        return [R/n, G/n, B/n];
+      } catch(e){
+        tainted = true;      // cross-origin image; stop trying
+        return PAGE_BG;
+      }
+    }
+    return PAGE_BG;          // over the page background, not a photo
+  }
+
+  function tick(){
+    if (tainted) return;                       // give up quietly
+    for (const el of targets){
+      const r = el.getBoundingClientRect();
+      if (!r.width) continue;
+      const [R,G,B] = sampleAt(r.left + r.width/2, r.top + r.height/2);
+      const c = oppositeBar(R,G,B);
+      el.style.color = `rgb(${c[0]},${c[1]},${c[2]})`;
+    }
+  }
+
+  const start = () => { tick(); setInterval(tick, 130); };
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
 })();
 </script>
 
