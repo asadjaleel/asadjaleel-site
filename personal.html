@@ -4,406 +4,320 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personal — Asad Jaleel</title>
+<meta name="description" content="Asad Jaleel — the short version. Raised in a mechanic's shop, still taking things apart. Watches, cars, photography, and a long interest in time.">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="favicon-180.png">
 <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#faf7f2;
     --ink:#201e1a;
-    --ink-dim:#726c62;
-    --hairline:rgba(32,30,26,0.12);
-    --about:#61735a;
-    --ease: cubic-bezier(.65,0,.35,1);
+    --ink-dim:#6b665d;
+    --line:rgba(32,30,26,.15);
+    --accent:#61735a;
+    --mono:'Courier New', Courier, monospace;
+    --ease:cubic-bezier(.65,0,.35,1);
   }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{background:var(--bg);scroll-behavior:smooth;}
+  body{font-family:var(--mono);color:var(--ink);position:relative;}
 
-  *{box-sizing:border-box; margin:0; padding:0;}
-
-  html{ scroll-behavior:smooth; }
-
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter', sans-serif;
-    min-height:100vh;
-  }
-
-  a{ color:inherit; text-decoration:none; }
-
-  ::selection{ background:var(--about); color:var(--bg); }
-
-  /* Topbar */
-  .topbar{
-    position:sticky;
-    top:0; left:0; right:0;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:24px 36px;
-    z-index:30;
-    background:rgba(250,247,242,0.85);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--hairline);
-  }
-  .back-link{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--ink-dim);
-    transition:color 250ms var(--ease);
-  }
-  .back-link:hover{ color:var(--ink); }
-  .back-link svg{ width:14px; height:14px; }
-
-  .brand{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:500;
-    font-size:14px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-  }
-
-  /* Hero */
-  .hero{
-    padding:90px 36px 60px;
-    max-width:1100px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:1.3fr 1fr;
-    gap:56px;
-    align-items:end;
-  }
-  @media (max-width: 860px){
-    .hero{ grid-template-columns:1fr; gap:36px; padding-top:60px; }
-  }
-
-  .eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--about);
-    margin-bottom:16px;
-  }
-  .hero h1{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    font-size:clamp(40px, 6.5vw, 78px);
-    line-height:0.98;
-    margin-bottom:22px;
-  }
-  .hero-intro{
-    font-size:16px;
-    line-height:1.7;
-    color:var(--ink-dim);
-    max-width:480px;
-  }
-
-  .hero-portrait{
-    position:relative;
-    aspect-ratio:4/5;
-    border-radius:6px;
-    overflow:hidden;
-    background:#efece4;
-  }
-  .hero-portrait img{
+  /* A circuit running the margins: two silhouettes lapping the page.
+     Deliberately faint — it should register as movement, not decoration. */
+  .track-bg{
     position:absolute; inset:0;
-    width:100%; height:100%;
-    object-fit:cover;
-    object-position:center;
-    filter:grayscale(10%) brightness(1) contrast(1.02);
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
   }
-  @media (max-width: 860px){
-    .hero-portrait{ aspect-ratio:16/10; }
+  #track{ width:100%; height:100%; display:block; }
+  .lane{ fill:none; stroke:rgba(32,30,26,.09); stroke-width:1.5; stroke-dasharray:2 9; }
+  .rider{ fill:#201e1a; opacity:.55; }
+  header, main, footer{ position:relative; z-index:1; }
+
+  @media (prefers-reduced-motion:reduce){ .track-bg{ display:none; } }
+  a{color:inherit;text-decoration:none;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+
+  /* ---------- Header ---------- */
+  header{padding:22px 28px 14px;}
+  .who{
+    font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);transition:color .2s var(--ease);
+  }
+  .who:hover{color:var(--accent);}
+
+  .wrap{width:min(920px, calc(100vw - 56px));margin:0 auto;position:relative;z-index:1;}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:56px 0 20px;}
+  h1{
+    font-size:clamp(34px,4.6vw,56px);font-weight:400;
+    letter-spacing:.02em;line-height:1.05;margin-bottom:.55em;
+  }
+  .lede{
+    font-size:16px;line-height:1.85;color:var(--ink-dim);
+    max-width:620px;
   }
 
-  /* Section shell */
-  section.block{
-    max-width:1100px;
-    margin:0 auto;
-    padding:64px 36px;
-    border-top:1px solid rgba(32,30,26,0.08);
-  }
-  .block-head{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:20px;
-    margin-bottom:36px;
-    flex-wrap:wrap;
-  }
-  .block-head h2{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    font-size:clamp(26px, 3.4vw, 38px);
-  }
-  .block-tag{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--ink-dim);
+  /* ---------- Sections ---------- */
+  section.block{padding:52px 0;border-top:1px solid var(--line);}
+  .block:first-of-type{border-top:none;}
+  .label{
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-dim);margin-bottom:26px;
   }
 
   /* Story */
   .story p{
-    font-size:16px;
-    line-height:1.8;
-    color:var(--ink-dim);
-    max-width:680px;
-    margin-bottom:20px;
+    font-size:15.5px;line-height:1.95;color:var(--ink-dim);
+    max-width:660px;margin-bottom:1.5em;
   }
-  .story p:last-child{ margin-bottom:0; }
-  .story p::selection{ background:var(--about); color:var(--bg); }
-  .placeholder-note{
-    display:inline-block;
-    margin-top:18px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.04em;
-    color:rgba(138,154,126,0.75);
-    border:1px dashed rgba(138,154,126,0.35);
-    border-radius:6px;
-    padding:8px 12px;
+  .story p:last-child{margin-bottom:0;}
+  .story b{color:var(--ink);font-weight:400;
+    border-bottom:1px solid var(--line);}
+
+  /* A single quiet pull-quote — the thread running through the page */
+  .thread{
+    margin:44px 0 0;
+    padding-left:20px;
+    border-left:2px solid var(--accent);
+    font-size:17px;line-height:1.75;color:var(--ink);
+    max-width:600px;
   }
 
-  /* Interests grid */
-  .interests-grid{
+  /* Interests */
+  .interests{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:20px;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;background:var(--line);
+    border:1px solid var(--line);
   }
-  @media (max-width: 860px){
-    .interests-grid{ grid-template-columns:repeat(2, 1fr); }
+  .interest{background:#fdfbf7;padding:24px 22px;}
+  /* odd count — let the last one run the full width rather than leaving a hole */
+  .interest:last-child{grid-column:1 / -1;}
+  .interest h3{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:400;margin-bottom:10px;
   }
-  @media (max-width: 560px){
-    .interests-grid{ grid-template-columns:1fr; }
-  }
+  .interest p{font-size:14px;line-height:1.75;color:var(--ink-dim);}
 
-  .interest-card{
-    padding:26px 22px;
-    border:1px solid rgba(32,30,26,0.1);
-    border-radius:10px;
-    background:rgba(32,30,26,0.02);
-    transition:border-color 300ms var(--ease), transform 300ms var(--ease);
-  }
-  .interest-card:hover{
-    border-color:rgba(138,154,126,0.4);
-    transform:translateY(-3px);
-  }
-  .interest-icon{
-    width:34px; height:34px;
-    border-radius:50%;
-    background:rgba(138,154,126,0.12);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--about);
-    margin-bottom:16px;
-  }
-  .interest-icon svg{ width:16px; height:16px; }
-  .interest-card h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:500;
-    font-size:16px;
-    margin-bottom:8px;
-  }
-  .interest-card p{
-    font-size:13px;
-    line-height:1.6;
-    color:var(--ink-dim);
-  }
-
-  /* Fun facts */
-  .facts-list{
-    display:flex;
-    flex-direction:column;
-  }
-  .fact-row{
-    display:grid;
-    grid-template-columns:64px 1fr;
-    gap:24px;
-    padding:22px 0;
-    border-bottom:1px solid rgba(32,30,26,0.08);
+  /* Facts */
+  .facts{display:flex;flex-direction:column;}
+  .fact{
+    display:grid;grid-template-columns:44px 1fr;gap:20px;
+    padding:20px 0;border-bottom:1px solid var(--line);
     align-items:baseline;
   }
-  .fact-row:last-child{ border-bottom:none; }
-  .fact-num{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    color:var(--about);
-    letter-spacing:0.04em;
-  }
-  .fact-row p{
-    font-size:16px;
-    line-height:1.6;
-    color:var(--ink-dim);
-  }
+  .fact:last-child{border-bottom:none;}
+  .fact .n{font-size:12px;color:var(--accent);letter-spacing:.06em;}
+  .fact p{font-size:15px;line-height:1.8;color:var(--ink-dim);}
 
-  /* Footer */
+  /* ---------- Footer ---------- */
   footer{
-    max-width:1100px;
-    margin:0 auto;
-    padding:56px 36px 90px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:16px;
+    padding:44px 0 70px;
+    display:flex;flex-direction:column;gap:22px;align-items:flex-start;
+    border-top:1px solid var(--line);
   }
-  footer .eyebrow{ margin:0; }
-  .footer-links{
-    display:flex;
-    gap:22px;
-  }
-  .footer-links a{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--ink-dim);
-    border-bottom:1px solid transparent;
-    transition:color 250ms var(--ease), border-color 250ms var(--ease);
-  }
-  .footer-links a:hover{
-    color:var(--ink);
-    border-color:rgba(32,30,26,0.4);
-  }
+  .links{display:flex;gap:24px;font-size:13px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-dim);}
+  .links a{border-bottom:1px solid transparent;
+    transition:color .2s var(--ease),border-color .2s var(--ease);}
+  .links a:hover{color:var(--ink);border-color:var(--line);}
+  .copy{font-size:12px;letter-spacing:.04em;color:var(--ink-dim);
+    width:100%;padding-top:20px;border-top:1px solid var(--line);}
 
-  @media (prefers-reduced-motion: reduce){
-    *{ transition:none !important; }
+  /* ---------- Small screens ---------- */
+  @media (max-width:720px){
+    .wrap{width:calc(100vw - 36px);}
+    .interests{grid-template-columns:1fr;}
+    .interest:last-child{grid-column:auto;}
+    .hero{padding:40px 0 10px;}
+    section.block{padding:40px 0;}
+    .fact{grid-template-columns:32px 1fr;gap:14px;}
+    .story p, .fact p{font-size:14.5px;}
   }
 </style>
 </head>
 <body>
 
-  <div class="topbar">
-    <a class="back-link" href="/">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-      Home
-    </a>
-    <span class="brand">Asad Jaleel</span>
-  </div>
+<div class="track-bg" aria-hidden="true">
+  <svg id="track" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<header>
+  <a class="who" href="/">Asad Jaleel</a>
+</header>
+
+<main class="wrap">
 
   <section class="hero">
-    <div>
-      <p class="eyebrow">The Person</p>
-      <h1>Personal</h1>
-      <p class="hero-intro">Who I am outside the résumé and the frame — the short version, and the slightly longer one below.</p>
-    </div>
-    <div class="hero-portrait">
-      <!-- Replace src with your own photo, e.g. images/personal-portrait.jpg -->
-      <img src="images/personal-portrait.jpg" alt="" onerror="this.style.display='none'">
-    </div>
+    <h1>Personal</h1>
+    <p class="lede">Raised in a mechanic's shop in the San Gabriel Valley. Still taking things apart — though these days I usually get them back together.</p>
   </section>
 
   <section class="block story">
-    <div class="block-head">
-      <h2>My Story</h2>
-      <span class="block-tag">Bio</span>
-    </div>
-    <p>[Paragraph 1 — where you're from, what shaped your early years, or how you'd introduce yourself to someone at a dinner party.]</p>
-    <p>[Paragraph 2 — what you've been focused on more recently, a turning point, or what you care about right now.]</p>
-    <p>[Paragraph 3 — optional: where you're headed, what you're curious about, or how you want people to remember meeting you.]</p>
-    <span class="placeholder-note">Placeholder — swap in your real story here</span>
+    <p class="label">The short version</p>
+    <p>Born at Whittier Hospital and raised in West Covina, in a part of town that taught me a few things early. My parents later moved us one city over to Walnut.</p>
+    <p>My father was an <b>automotive mechanic</b>, so I spent my summers and most afternoons after school in his shop. It started with sweeping the garage. Then tire rotations. Then the occasional oil change. Eventually engine and transmission pulls, valve adjustments, and full rebuilds. That shop is where I became a tinkerer.</p>
+    <p>It came with a cost. As a kid I'd take apart anything in the house to see how it worked, and I almost never got it back together. Something that had been working perfectly well would sit in pieces until my dad found time to fix it.</p>
+    <p>My mother wanted me to become a doctor. I split the difference and took a <b>B.S. in Biomedical Engineering</b> — close enough to medicine for her, close enough to machines for me. These days my spare energy goes into personal projects and building a consulting practice of my own.</p>
+
+    <p class="thread">A watch lets me watch time pass. A photograph lets me keep a piece of it. Most of what I'm drawn to sits somewhere between those two.</p>
   </section>
 
   <section class="block">
-    <div class="block-head">
-      <h2>Interests &amp; Hobbies</h2>
-      <span class="block-tag">Outside Work</span>
-    </div>
-    <div class="interests-grid">
-      <div class="interest-card">
-        <div class="interest-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        </div>
-        <h3>[Interest One]</h3>
-        <p>[A sentence on why you're into it or how long you've been doing it.]</p>
+    <p class="label">Interests</p>
+    <div class="interests">
+      <div class="interest">
+        <h3>Watches</h3>
+        <p>It's the mechanics of the thing — an engine small enough to wear. And the fact that you can actually watch time pass on your wrist. There's a beauty in that.</p>
       </div>
-      <div class="interest-card">
-        <div class="interest-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
-        </div>
-        <h3>[Interest Two]</h3>
-        <p>[A sentence on why you're into it or how long you've been doing it.]</p>
+      <div class="interest">
+        <h3>Cars</h3>
+        <p>Cars have personalities. They feel like living things to me — pure, raw, and no two of them the same.</p>
       </div>
-      <div class="interest-card">
-        <div class="interest-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v5h5"/></svg>
-        </div>
-        <h3>[Interest Three]</h3>
-        <p>[A sentence on why you're into it or how long you've been doing it.]</p>
+      <div class="interest">
+        <h3>Motorcycles</h3>
+        <p>A different kind of creature altogether. Their own beauty, their own experience, nothing else quite like being on one.</p>
       </div>
-      <div class="interest-card">
-        <div class="interest-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
-        </div>
-        <h3>[Interest Four]</h3>
-        <p>[A sentence on why you're into it or how long you've been doing it.]</p>
+      <div class="interest">
+        <h3>Racing</h3>
+        <p>Drifting, Formula 1, MotoGP. The chase and the battle are the obvious part; the strategy each team runs underneath it is the rest. MotoGP is the purest thrill of the three.</p>
       </div>
-      <div class="interest-card">
-        <div class="interest-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l2-2 4 4L19 4l2 2-12 12z"/></svg>
-        </div>
-        <h3>[Interest Five]</h3>
-        <p>[A sentence on why you're into it or how long you've been doing it.]</p>
+      <div class="interest">
+        <h3>Photography</h3>
+        <p>Learned it from my father — another tinkerer, who shot film and later a Canon 5D Mark III, and took extraordinary photos with both. Landscape, cityscape, and astrophotography are where I've landed. A photo holds a moment that will never happen again.</p>
       </div>
-      <div class="interest-card">
-        <div class="interest-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
-        </div>
-        <h3>[Interest Six]</h3>
-        <p>[A sentence on why you're into it or how long you've been doing it.]</p>
+      <div class="interest">
+        <h3>Hiking &amp; Travel</h3>
+        <p>Adventure, mostly. Seeing more places widens how I see everything else — and nature is worth the trip on its own terms.</p>
+      </div>
+      <div class="interest">
+        <h3>Snowboarding</h3>
+        <p>My friends dragged me into it and I fell for it hard. Closest thing I've found to drifting a car, except you're drifting on the earth itself.</p>
       </div>
     </div>
   </section>
 
   <section class="block">
-    <div class="block-head">
-      <h2>Fun Facts</h2>
-      <span class="block-tag">Quick Hits</span>
-    </div>
-    <div class="facts-list">
-      <div class="fact-row">
-        <span class="fact-num">01</span>
-        <p>[A quick, specific fun fact about you — the kind that makes a good icebreaker.]</p>
+    <p class="label">A few things about me</p>
+    <div class="facts">
+      <div class="fact">
+        <span class="n">01</span>
+        <p>I started in my dad's shop sweeping floors and worked my way up to full engine rebuilds before I was out of school.</p>
       </div>
-      <div class="fact-row">
-        <span class="fact-num">02</span>
-        <p>[Another one — could be a place you've been, a skill you have, or something unexpected.]</p>
+      <div class="fact">
+        <span class="n">02</span>
+        <p>As a kid I dismantled working household items purely to see inside them, and left a trail of things my father had to reassemble.</p>
       </div>
-      <div class="fact-row">
-        <span class="fact-num">03</span>
-        <p>[Something people are usually surprised to learn about you.]</p>
+      <div class="fact">
+        <span class="n">03</span>
+        <p>My mom wanted a doctor in the family. Biomedical engineering was my compromise, and I'd argue I honored the spirit of it.</p>
       </div>
-      <div class="fact-row">
-        <span class="fact-num">04</span>
-        <p>[A small personal detail — favorite food, a habit, a running joke among friends.]</p>
+      <div class="fact">
+        <span class="n">04</span>
+        <p>Everything I know about a camera came from my father and his film bodies — I just pointed them at mountains and stars instead of people.</p>
       </div>
-      <div class="fact-row">
-        <span class="fact-num">05</span>
-        <p>[One more — keep it light and specific rather than generic.]</p>
+      <div class="fact">
+        <span class="n">05</span>
+        <p>I describe snowboarding as drifting on earth, and I stand by it.</p>
       </div>
     </div>
   </section>
 
   <footer>
-    <p class="eyebrow">Say Hello</p>
-    <div class="footer-links">
-      <a href="mailto:you@asadjaleel.com">Email</a>
-      <a href="#">LinkedIn</a>
-      <a href="#">Instagram</a>
+    <div class="links">
+      <a href="mailto:asad.m.jaleel@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/asadjaleel/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="/photography">Photography</a>
     </div>
+    <p class="copy">© <span id="yr">2026</span> Asad Jaleel. All rights reserved.</p>
   </footer>
+
+</main>
+
+<script>
+  // keep the copyright year current
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ============================================================
+     Two silhouettes lapping the page in the margins — a racecar
+     and a motorcycle, seen from above. The lane is drawn just
+     outside the text column, so nothing ever crosses the words.
+     ============================================================ */
+  (function(){
+    const svg = document.getElementById('track');
+    const wrap = document.querySelector('.wrap');
+    if (!svg || !wrap) return;
+    const NS = 'http://www.w3.org/2000/svg';
+    const el = (n, a={}) => { const e = document.createElementNS(NS,n);
+      for (const k in a) e.setAttribute(k,a[k]); return e; };
+
+    function build(){
+      svg.innerHTML = '';
+      const W = document.body.clientWidth;
+      const H = document.body.scrollHeight;
+      const colLeft = wrap.getBoundingClientRect().left;
+
+      // lane sits between the page edge and the text column
+      const inset = colLeft - 46;
+      if (inset < 34 || W < 1080){ svg.removeAttribute('viewBox'); return; }
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.setAttribute('width', W);
+      svg.setAttribute('height', H);
+
+      const r = 90, top = 30, bot = H - 30, l = inset, rt = W - inset;
+      const d = `M ${l+r},${top} H ${rt-r} A ${r},${r} 0 0 1 ${rt},${top+r}`
+              + ` V ${bot-r} A ${r},${r} 0 0 1 ${rt-r},${bot}`
+              + ` H ${l+r} A ${r},${r} 0 0 1 ${l},${bot-r}`
+              + ` V ${top+r} A ${r},${r} 0 0 1 ${l+r},${top} Z`;
+
+      const defs = el('defs');
+      defs.appendChild(el('path', {id:'lane', d}));
+      svg.appendChild(defs);
+      svg.appendChild(el('use', {href:'#lane', class:'lane'}));
+
+      const lap = (kind, dur, begin) => {
+        const g = el('g', {class:'rider'});
+        if (kind === 'car'){
+          g.appendChild(el('rect',{x:-11,y:-4.5,width:22,height:9,rx:3.5}));   // body
+          g.appendChild(el('rect',{x:-13,y:-7.5,width:4,height:3,rx:1}));      // wheels
+          g.appendChild(el('rect',{x:-13,y:4.5,width:4,height:3,rx:1}));
+          g.appendChild(el('rect',{x:9,y:-7.5,width:4,height:3,rx:1}));
+          g.appendChild(el('rect',{x:9,y:4.5,width:4,height:3,rx:1}));
+          g.appendChild(el('rect',{x:12,y:-5,width:2.5,height:10,rx:1}));      // front wing
+          g.appendChild(el('rect',{x:-14.5,y:-4,width:2.5,height:8,rx:1}));    // rear wing
+        } else {
+          g.appendChild(el('rect',{x:-8,y:-2,width:16,height:4,rx:2}));        // body
+          g.appendChild(el('rect',{x:-10,y:-1.5,width:3,height:3,rx:1.2}));    // wheels
+          g.appendChild(el('rect',{x:7,y:-1.5,width:3,height:3,rx:1.2}));
+          g.appendChild(el('rect',{x:2,y:-3.5,width:2,height:7,rx:1}));        // bars
+        }
+        const m = el('animateMotion', {dur:dur+'s', repeatCount:'indefinite',
+                                       rotate:'auto', begin:begin+'s'});
+        // mpath still wants the xlink namespace in Chrome
+        const mp = el('mpath', {href:'#lane'});
+        mp.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href','#lane');
+        m.appendChild(mp);
+        g.appendChild(m);
+        svg.appendChild(g);
+      };
+
+      lap('car',  74, 0);     // different lap times, so they trade places
+      lap('bike', 91, -22);
+    }
+
+    build();
+    let t;
+    const redraw = () => { clearTimeout(t); t = setTimeout(build, 140); };
+    window.addEventListener('resize', redraw);
+    if (window.ResizeObserver) new ResizeObserver(redraw).observe(document.body);
+  })();
+</script>
 
 </body>
 </html>
