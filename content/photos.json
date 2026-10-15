@@ -1,8 +1,29 @@
 {
   "photos": [
-    { "category": "portraits", "image": "/images/photography/portrait-1.jpg", "alt": "Portrait" },
-    { "category": "portraits", "image": "/images/photography/portrait-2.jpg", "alt": "Portrait" },
-    { "category": "portraits", "image": "/images/photography/portrait-3.jpg", "alt": "Portrait" },
-    { "category": "portraits", "image": "/images/photography/portrait-4.jpg", "alt": "Portrait" }
+    {
+      "category": "portraits",
+      "image": "/images/photography/portrait-1.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "category": "portraits",
+      "image": "/images/photography/portrait-2.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "category": "portraits",
+      "image": "/images/photography/portrait-3.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "category": "portraits",
+      "image": "/images/photography/portrait-4.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "alt": "Photo",
+      "category": "landscapes",
+      "image": "/images/photography/uploads/crg-stream.jpg"
+    }
   ]
 }
